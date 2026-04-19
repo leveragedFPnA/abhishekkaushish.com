@@ -5,104 +5,93 @@
   <title>Abhishek Kaushish</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Google Font (premium feel) -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
     body {
+      margin: 0;
       height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      background: #0d0d0d;
-      color: #f5f5f5;
+      background: #f8f8f8;
       font-family: 'Inter', sans-serif;
+      color: #111;
     }
 
     .container {
       text-align: center;
-      animation: fadeIn 1.2s ease;
+      max-width: 500px;
+    }
+
+    img {
+      width: 70px;
+      margin-bottom: 25px;
+      opacity: 0.9;
     }
 
     h1 {
-      font-size: 42px;
-      font-weight: 400;
-      letter-spacing: 0.5px;
-      margin-bottom: 16px;
+      font-size: 34px;
+      font-weight: 500;
+      margin-bottom: 10px;
     }
 
     .email {
-      font-size: 16px;
-      color: #a0a0a0;
+      font-size: 15px;
+      color: #666;
       text-decoration: none;
-      position: relative;
-      transition: color 0.3s ease;
-    }
-
-    .email::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      bottom: -4px;
-      width: 0%;
-      height: 1px;
-      background: #f5f5f5;
-      transition: width 0.3s ease;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 2px;
     }
 
     .email:hover {
-      color: #ffffff;
+      color: #000;
+      border-color: #000;
     }
 
-    .email:hover::after {
-      width: 100%;
+    .section {
+      margin-top: 50px;
     }
 
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(10px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    .label {
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      color: #999;
+      margin-bottom: 12px;
     }
 
-    /* Subtle grain overlay for premium texture */
-    body::before {
-      content: "";
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: url('https://grainy-gradients.vercel.app/noise.svg');
-      opacity: 0.04;
-      pointer-events: none;
+    .report-link {
+      font-size: 15px;
+      text-decoration: none;
+      color: #111;
+    }
+
+    .report-link:hover {
+      opacity: 0.6;
     }
   </style>
 </head>
 
 <body>
   <div class="container">
+
+    <!-- Logo -->
+    <img src="logo.png" alt="AK Logo">
+
     <h1>Abhishek Kaushish</h1>
+
     <a class="email" href="mailto:abhishek@abhishekkaushish.com">
       abhishek@abhishekkaushish.com
     </a>
 
-    <div style="margin-top:50px;">
-    <a href="report/india-10y-gsec-analysis.pdf" target="_blank">
-      India 10Y G-Sec Analysis ↗
-    </a>
-  </div>
-    
+    <div class="section">
+      <div class="label">SELECTED WORK</div>
+
+      <a class="report-link" href="report/india-10y-gsec-analysis.pdf" target="_blank">
+        India 10Y G-Sec Analysis ↗
+      </a>
+    </div>
+
   </div>
 </body>
 </html>
