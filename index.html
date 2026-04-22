@@ -2,86 +2,637 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Abhishek Kaushish</title>
+  <title>Abhishek Kaushish — FP&A</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --bg: #0a0b0d;
+      --surface: #111318;
+      --border: #1e2128;
+      --border-light: #2a2d36;
+      --text: #e8e9eb;
+      --muted: #6b7080;
+      --accent: #c8a96e;
+      --accent-dim: #8a6f3e;
+      --green: #4caf82;
+      --red: #e05c5c;
+      --mono: 'DM Mono', monospace;
+      --serif: 'Libre Baskerville', Georgia, serif;
+    }
+ 
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+ 
     body {
-      margin: 0;
-      height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--serif);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+ 
+    /* Subtle grid background */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 60px 60px;
+      opacity: 0.4;
+      pointer-events: none;
+      z-index: 0;
+    }
+ 
+    .page {
+      position: relative;
+      z-index: 1;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+ 
+    /* ── HEADER / TICKER ── */
+    .ticker-bar {
+      border-bottom: 1px solid var(--border);
+      padding: 10px 0;
+      overflow: hidden;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted);
+      position: relative;
+    }
+ 
+    .ticker-inner {
       display: flex;
-      justify-content: center;
-      align-items: center;
-      background: #0f0f0f;
-      color: #eaeaea;
-      font-family: "Times New Roman", Times, serif;
+      gap: 40px;
+      animation: ticker 25s linear infinite;
+      white-space: nowrap;
     }
-
-    .container {
-      text-align: center;
-      max-width: 600px;
+ 
+    .ticker-item { display: flex; gap: 8px; }
+    .ticker-item .sym { color: var(--text); font-weight: 500; }
+    .ticker-item .up { color: var(--green); }
+    .ticker-item .dn { color: var(--red); }
+ 
+    @keyframes ticker {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
     }
-
+ 
+    /* ── HERO ── */
+    .hero {
+      padding: 80px 0 60px;
+      border-bottom: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 40px;
+      align-items: end;
+    }
+ 
+    .hero-label {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 3px;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+ 
     h1 {
-      font-size: 36px;
-      font-weight: normal;
-      margin-bottom: 12px;
-      letter-spacing: 0.5px;
+      font-family: var(--serif);
+      font-size: clamp(42px, 6vw, 68px);
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -1px;
+      color: var(--text);
     }
-
-    .email {
+ 
+    h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+ 
+    .hero-sub {
+      margin-top: 20px;
       font-size: 16px;
-      color: #bfbfbf;
-      text-decoration: none;
-      border-bottom: 1px solid #444;
-      padding-bottom: 2px;
+      color: var(--muted);
+      font-family: var(--mono);
+      font-weight: 300;
+      line-height: 1.7;
+      max-width: 480px;
     }
-
-    .email:hover {
-      color: #ffffff;
-      border-color: #ffffff;
+ 
+    .hero-contact {
+      margin-top: 32px;
+      display: flex;
+      gap: 24px;
+      align-items: center;
     }
-
-    .section {
-      margin-top: 60px;
-    }
-
-    .label {
+ 
+    .btn-primary {
+      font-family: var(--mono);
       font-size: 12px;
-      letter-spacing: 2px;
-      color: #777;
-      margin-bottom: 15px;
-    }
-
-    .report-link {
-      font-size: 16px;
-      color: #eaeaea;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--bg);
+      background: var(--accent);
+      border: none;
+      padding: 12px 24px;
+      cursor: pointer;
       text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
     }
-
-    .report-link:hover {
-      color: #ffffff;
+    .btn-primary:hover { background: #dfc088; transform: translateY(-1px); }
+ 
+    .link-plain {
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 1px;
+      color: var(--muted);
+      text-decoration: none;
+      border-bottom: 1px solid var(--border-light);
+      padding-bottom: 2px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .link-plain:hover { color: var(--text); border-color: var(--muted); }
+ 
+    /* Stat card cluster */
+    .stat-cluster {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      text-align: right;
+    }
+ 
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 14px 20px;
+      min-width: 160px;
+    }
+ 
+    .stat-card .s-label {
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 2px;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+ 
+    .stat-card .s-val {
+      font-family: var(--mono);
+      font-size: 22px;
+      font-weight: 500;
+      color: var(--text);
+      margin-top: 4px;
+    }
+ 
+    .stat-card .s-delta {
+      font-family: var(--mono);
+      font-size: 10px;
+      margin-top: 2px;
+    }
+    .up { color: var(--green); }
+    .dn { color: var(--red); }
+ 
+    /* ── SECTIONS ── */
+    section {
+      padding: 60px 0;
+      border-bottom: 1px solid var(--border);
+    }
+ 
+    .sec-header {
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+ 
+    .sec-num {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--accent-dim);
+    }
+ 
+    .sec-title {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+ 
+    /* ── WORK / CARDS ── */
+    .work-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+    }
+ 
+    .work-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 28px 28px 24px;
+      text-decoration: none;
+      display: block;
+      transition: border-color 0.2s, background 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+ 
+    .work-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, transparent 60%, rgba(200, 169, 110, 0.04));
+      pointer-events: none;
+    }
+ 
+    .work-card:hover {
+      border-color: var(--accent-dim);
+      background: #13151a;
+    }
+ 
+    .work-card:hover .work-arrow { transform: translate(3px, -3px); }
+ 
+    .work-tag {
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 2px;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+ 
+    .work-title {
+      font-family: var(--serif);
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.3;
+      margin-bottom: 10px;
+    }
+ 
+    .work-desc {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.6;
+      font-weight: 300;
+    }
+ 
+    .work-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 20px;
+    }
+ 
+    .work-meta {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--border-light);
+    }
+ 
+    .work-arrow {
+      font-size: 14px;
+      color: var(--accent);
+      transition: transform 0.2s;
+    }
+ 
+    /* ── SKILLS MATRIX ── */
+    .skills-matrix {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+ 
+    .skill-group {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 24px;
+    }
+ 
+    .skill-group-title {
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 2.5px;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+ 
+    .skill-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+ 
+    .skill-list li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 300;
+    }
+ 
+    .skill-bar-wrap {
+      width: 60px;
+      height: 2px;
+      background: var(--border);
+    }
+ 
+    .skill-bar {
+      height: 100%;
+      background: var(--accent);
+    }
+ 
+    /* ── EXPERIENCE TIMELINE ── */
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+ 
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: 32px;
+      padding: 24px 0;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+    }
+ 
+    .timeline-item:last-child { border-bottom: none; }
+ 
+    .t-period {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted);
+      font-weight: 300;
+      padding-top: 3px;
+    }
+ 
+    .t-role {
+      font-family: var(--serif);
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+ 
+    .t-company {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--accent);
+      margin-bottom: 10px;
+      font-weight: 300;
+    }
+ 
+    .t-desc {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.7;
+      font-weight: 300;
+    }
+ 
+    /* ── FOOTER ── */
+    footer {
+      padding: 40px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+ 
+    .footer-name {
+      font-family: var(--serif);
+      font-size: 14px;
+      font-style: italic;
+      color: var(--muted);
+    }
+ 
+    .footer-time {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--border-light);
+      letter-spacing: 1px;
+    }
+ 
+    /* ── ANIMATIONS ── */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(16px);
+      animation: fadeUp 0.7s ease forwards;
+    }
+ 
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+ 
+    .fade-in:nth-child(1) { animation-delay: 0.1s; }
+    .fade-in:nth-child(2) { animation-delay: 0.25s; }
+    .fade-in:nth-child(3) { animation-delay: 0.4s; }
+    .fade-in:nth-child(4) { animation-delay: 0.55s; }
+ 
+    /* ── RESPONSIVE ── */
+    @media (max-width: 680px) {
+      .hero { grid-template-columns: 1fr; }
+      .stat-cluster { flex-direction: row; flex-wrap: wrap; text-align: left; }
+      .work-grid { grid-template-columns: 1fr; }
+      .skills-matrix { grid-template-columns: 1fr; }
+      .timeline-item { grid-template-columns: 1fr; gap: 4px; }
+      .t-period { font-size: 10px; }
+      footer { flex-direction: column; gap: 12px; text-align: center; }
     }
   </style>
 </head>
-
 <body>
-  <div class="container">
-
-    <h1>Abhishek Kaushish</h1>
-
-    <a class="email" href="mailto:abhishek@abhishekkaushish.com">
-      abhishek@abhishekkaushish.com
-    </a>
-
-    <div class="section">
-      <div class="label">SELECTED WORK</div>
-
-      <a class="report-link" href="report/india-10y-gsec-analysis.pdf" target="_blank">
-        India 10Y G-Sec Analysis ↗
-      </a>
+ 
+<div class="ticker-bar">
+  <div class="page">
+    <div class="ticker-inner" id="ticker">
+      <!-- filled by JS -->
     </div>
-
   </div>
+</div>
+ 
+<div class="page">
+ 
+  <!-- HERO -->
+  <header class="hero">
+    <div class="fade-in">
+      <div class="hero-label">Financial Planning &amp; Analysis</div>
+      <h1>Abhishek<br><em>Kaushish</em></h1>
+      <p class="hero-sub">
+        Building clarity from complexity — budgets, forecasts,<br>
+        and strategic models that drive decisions.
+      </p>
+      <div class="hero-contact">
+        <a class="btn-primary" href="mailto:abhishek@abhishekkaushish.com">Get in touch</a>
+        <a class="link-plain" href="report/india-10y-gsec-analysis.pdf" target="_blank">View latest report ↗</a>
+      </div>
+    </div>
+ 
+    <div class="stat-cluster fade-in">
+      <div class="stat-card">
+        <div class="s-label">10Y G-Sec Yield</div>
+        <div class="s-val">6.84<span style="font-size:14px">%</span></div>
+        <div class="s-delta up">▲ +4 bps today</div>
+      </div>
+      <div class="stat-card">
+        <div class="s-label">Nifty 50</div>
+        <div class="s-val">24,315</div>
+        <div class="s-delta dn">▼ −0.3%</div>
+      </div>
+    </div>
+  </header>
+ 
+  <!-- SELECTED WORK -->
+  <section>
+    <div class="sec-header fade-in">
+      <span class="sec-num">01</span>
+      <span class="sec-title">Selected Work</span>
+    </div>
+    <div class="work-grid">
+      <a class="work-card fade-in" href="report/india-10y-gsec-analysis.pdf" target="_blank">
+        <div class="work-tag">Fixed Income · Research</div>
+        <div class="work-title">India 10Y G-Sec Analysis</div>
+        <div class="work-desc">
+          Macro-driven deep dive into sovereign yield drivers — RBI policy path, inflation expectations, and foreign flows.
+        </div>
+        <div class="work-footer">
+          <span class="work-meta">PDF · 2024</span>
+          <span class="work-arrow">↗</span>
+        </div>
+      </a>
+ 
+      <div class="work-card fade-in" style="cursor:default; opacity:0.45;">
+        <div class="work-tag">FP&amp;A · Modelling</div>
+        <div class="work-title">3-Statement<br>Integrated Model</div>
+        <div class="work-desc">
+          Revenue build + scenario planning. Coming soon.
+        </div>
+        <div class="work-footer">
+          <span class="work-meta">Excel · Upcoming</span>
+          <span class="work-arrow" style="color:var(--muted)">—</span>
+        </div>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- SKILLS -->
+  <section>
+    <div class="sec-header fade-in">
+      <span class="sec-num">02</span>
+      <span class="sec-title">Core Competencies</span>
+    </div>
+    <div class="skills-matrix">
+      <div class="skill-group fade-in">
+        <div class="skill-group-title">Planning &amp; Analysis</div>
+        <ul class="skill-list">
+          <li>Budgeting &amp; Forecasting <div class="skill-bar-wrap"><div class="skill-bar" style="width:90%"></div></div></li>
+          <li>Variance Analysis <div class="skill-bar-wrap"><div class="skill-bar" style="width:85%"></div></div></li>
+          <li>Scenario Modelling <div class="skill-bar-wrap"><div class="skill-bar" style="width:80%"></div></div></li>
+          <li>Business Partnering <div class="skill-bar-wrap"><div class="skill-bar" style="width:75%"></div></div></li>
+        </ul>
+      </div>
+      <div class="skill-group fade-in">
+        <div class="skill-group-title">Tools &amp; Tech</div>
+        <ul class="skill-list">
+          <li>Excel / Power Query <div class="skill-bar-wrap"><div class="skill-bar" style="width:95%"></div></div></li>
+          <li>Power BI <div class="skill-bar-wrap"><div class="skill-bar" style="width:70%"></div></div></li>
+          <li>SQL <div class="skill-bar-wrap"><div class="skill-bar" style="width:65%"></div></div></li>
+          <li>Python (pandas) <div class="skill-bar-wrap"><div class="skill-bar" style="width:55%"></div></div></li>
+        </ul>
+      </div>
+      <div class="skill-group fade-in">
+        <div class="skill-group-title">Finance</div>
+        <ul class="skill-list">
+          <li>Financial Statements <div class="skill-bar-wrap"><div class="skill-bar" style="width:90%"></div></div></li>
+          <li>DCF / Valuation <div class="skill-bar-wrap"><div class="skill-bar" style="width:80%"></div></div></li>
+          <li>Fixed Income <div class="skill-bar-wrap"><div class="skill-bar" style="width:75%"></div></div></li>
+          <li>MIS Reporting <div class="skill-bar-wrap"><div class="skill-bar" style="width:85%"></div></div></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- EXPERIENCE -->
+  <section>
+    <div class="sec-header fade-in">
+      <span class="sec-num">03</span>
+      <span class="sec-title">Experience</span>
+    </div>
+    <div class="timeline">
+      <div class="timeline-item fade-in">
+        <div class="t-period">2025 — Present</div>
+        <div>
+          <div class="t-role">FP&amp;A Analyst</div>
+          <div class="t-company">Deloitte</div>
+          <div class="t-desc">Own the monthly forecast cycle for Compensation, manage actuals vs. budget reporting for Consulting, and build driver-based models to support strategic planning.</div>
+        </div>
+      </div>
+      <div class="timeline-item fade-in">
+        <div class="t-period">2022 — 2025</div>
+        <div>
+          <div class="t-role">Financial Analyst</div>
+          <div class="t-company">EXL Service</div>
+          <div class="t-desc">Delivered variance commentary, built KPI dashboards, and partnered with business units on annual operating plans for US Property &amp; Casualty Insurance.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-name">Abhishek Kaushish</div>
+    <div class="footer-time" id="clock"></div>
+  </footer>
+ 
+</div>
+ 
+<script>
+  // Live clock
+  function updateClock() {
+    const now = new Date();
+    document.getElementById('clock').textContent =
+      now.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', second: '2-digit' })
+      + ' IST';
+  }
+  setInterval(updateClock, 1000);
+  updateClock();
+ 
+  // Ticker data (static — swap for live API if desired)
+  const tickers = [
+    { sym: 'NIFTY', val: '24,315.40', delta: '−0.31%', up: false },
+    { sym: 'SENSEX', val: '80,218.37', delta: '+0.12%', up: true },
+    { sym: 'USDINR', val: '83.52', delta: '−0.08%', up: false },
+    { sym: 'GOLD', val: '₹71,240', delta: '+0.44%', up: true },
+    { sym: 'IN10Y', val: '6.84%', delta: '+4bps', up: false },
+    { sym: 'BRENT', val: '$87.10', delta: '+0.22%', up: true },
+    { sym: 'NIFTY', val: '24,315.40', delta: '−0.31%', up: false },
+    { sym: 'SENSEX', val: '80,218.37', delta: '+0.12%', up: true },
+    { sym: 'USDINR', val: '83.52', delta: '−0.08%', up: false },
+    { sym: 'GOLD', val: '₹71,240', delta: '+0.44%', up: true },
+    { sym: 'IN10Y', val: '6.84%', delta: '+4bps', up: false },
+    { sym: 'BRENT', val: '$87.10', delta: '+0.22%', up: true },
+  ];
+ 
+  const ticker = document.getElementById('ticker');
+  tickers.forEach(t => {
+    ticker.innerHTML += `
+      <span class="ticker-item">
+        <span class="sym">${t.sym}</span>
+        <span>${t.val}</span>
+        <span class="${t.up ? 'up' : 'dn'}">${t.delta}</span>
+      </span>`;
+  });
+</script>
 </body>
 </html>
