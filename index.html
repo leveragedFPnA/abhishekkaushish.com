@@ -53,34 +53,6 @@
       padding: 0 32px;
     }
  
-    /* ── HEADER / TICKER ── */
-    .ticker-bar {
-      border-bottom: 1px solid var(--border);
-      padding: 10px 0;
-      overflow: hidden;
-      font-family: var(--mono);
-      font-size: 11px;
-      color: var(--muted);
-      position: relative;
-    }
- 
-    .ticker-inner {
-      display: flex;
-      gap: 40px;
-      animation: ticker 25s linear infinite;
-      white-space: nowrap;
-    }
- 
-    .ticker-item { display: flex; gap: 8px; }
-    .ticker-item .sym { color: var(--text); font-weight: 500; }
-    .ticker-item .up { color: var(--green); }
-    .ticker-item .dn { color: var(--red); }
- 
-    @keyframes ticker {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
-    }
- 
     /* ── HERO ── */
     .hero {
       padding: 80px 0 60px;
@@ -454,14 +426,6 @@
 </head>
 <body>
  
-<div class="ticker-bar">
-  <div class="page">
-    <div class="ticker-inner" id="ticker">
-      <!-- filled by JS -->
-    </div>
-  </div>
-</div>
- 
 <div class="page">
  
   <!-- HERO -->
@@ -476,19 +440,6 @@
       <div class="hero-contact">
         <a class="btn-primary" href="mailto:abhishek@abhishekkaushish.com">Get in touch</a>
         <a class="link-plain" href="report/india-10y-gsec-analysis.pdf" target="_blank">View latest report ↗</a>
-      </div>
-    </div>
- 
-    <div class="stat-cluster fade-in">
-      <div class="stat-card">
-        <div class="s-label">10Y G-Sec Yield</div>
-        <div class="s-val">6.84<span style="font-size:14px">%</span></div>
-        <div class="s-delta up">▲ +4 bps today</div>
-      </div>
-      <div class="stat-card">
-        <div class="s-label">Nifty 50</div>
-        <div class="s-val">24,315</div>
-        <div class="s-delta dn">▼ −0.3%</div>
       </div>
     </div>
   </header>
@@ -556,7 +507,7 @@
         <ul class="skill-list">
           <li>Financial Statements <div class="skill-bar-wrap"><div class="skill-bar" style="width:90%"></div></div></li>
           <li>DCF / Valuation <div class="skill-bar-wrap"><div class="skill-bar" style="width:80%"></div></div></li>
-          <li>Fixed Income <div class="skill-bar-wrap"><div class="skill-bar" style="width:75%"></div></div></li>
+          <li>Financial Modeling <div class="skill-bar-wrap"><div class="skill-bar" style="width:75%"></div></div></li>
           <li>MIS Reporting <div class="skill-bar-wrap"><div class="skill-bar" style="width:85%"></div></div></li>
         </ul>
       </div>
@@ -598,7 +549,6 @@
 </div>
  
 <script>
-  // Live clock
   function updateClock() {
     const now = new Date();
     document.getElementById('clock').textContent =
@@ -607,32 +557,7 @@
   }
   setInterval(updateClock, 1000);
   updateClock();
- 
-  // Ticker data (static — swap for live API if desired)
-  const tickers = [
-    { sym: 'NIFTY', val: '24,315.40', delta: '−0.31%', up: false },
-    { sym: 'SENSEX', val: '80,218.37', delta: '+0.12%', up: true },
-    { sym: 'USDINR', val: '83.52', delta: '−0.08%', up: false },
-    { sym: 'GOLD', val: '₹71,240', delta: '+0.44%', up: true },
-    { sym: 'IN10Y', val: '6.84%', delta: '+4bps', up: false },
-    { sym: 'BRENT', val: '$87.10', delta: '+0.22%', up: true },
-    { sym: 'NIFTY', val: '24,315.40', delta: '−0.31%', up: false },
-    { sym: 'SENSEX', val: '80,218.37', delta: '+0.12%', up: true },
-    { sym: 'USDINR', val: '83.52', delta: '−0.08%', up: false },
-    { sym: 'GOLD', val: '₹71,240', delta: '+0.44%', up: true },
-    { sym: 'IN10Y', val: '6.84%', delta: '+4bps', up: false },
-    { sym: 'BRENT', val: '$87.10', delta: '+0.22%', up: true },
-  ];
- 
-  const ticker = document.getElementById('ticker');
-  tickers.forEach(t => {
-    ticker.innerHTML += `
-      <span class="ticker-item">
-        <span class="sym">${t.sym}</span>
-        <span>${t.val}</span>
-        <span class="${t.up ? 'up' : 'dn'}">${t.delta}</span>
-      </span>`;
-  });
 </script>
 </body>
 </html>
+ 
