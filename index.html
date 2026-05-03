@@ -4,560 +4,448 @@
   <meta charset="UTF-8">
   <title>Abhishek Kaushish — FP&A</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" media="screen" href="https://fontlibrary.org//face/xb-niloofar" type="text/css"/>
   <style>
     :root {
-      --bg: #0a0b0d;
-      --surface: #111318;
-      --border: #1e2128;
-      --border-light: #2a2d36;
-      --text: #e8e9eb;
-      --muted: #6b7080;
-      --accent: #c8a96e;
-      --accent-dim: #8a6f3e;
-      --green: #4caf82;
-      --red: #e05c5c;
-      --mono: 'DM Mono', monospace;
-      --serif: 'Libre Baskerville', Georgia, serif;
+      --cream: #ede8df;
+      --white: #ffffff;
+      --navy: #1a2e4a;
+      --navy-mid: #2a4060;
+      --muted: #5a6a82;
+      --light-muted: #8a96a8;
+      --border: #d4cec6;
+      --niloofar: 'XBNiloofarRegular', Georgia, serif;
     }
- 
+
     * { box-sizing: border-box; margin: 0; padding: 0; }
- 
+
     body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: var(--serif);
+      background: var(--cream);
+      color: var(--navy);
+      font-family: var(--niloofar);
       min-height: 100vh;
       overflow-x: hidden;
     }
- 
-    /* Subtle grid background */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image:
-        linear-gradient(var(--border) 1px, transparent 1px),
-        linear-gradient(90deg, var(--border) 1px, transparent 1px);
-      background-size: 60px 60px;
-      opacity: 0.4;
-      pointer-events: none;
-      z-index: 0;
+
+    /* WHITE HERO BANNER */
+    .hero-banner {
+      background: var(--white);
+      width: 100%;
     }
- 
-    .page {
-      position: relative;
-      z-index: 1;
+
+    .hero-inner {
       max-width: 900px;
       margin: 0 auto;
-      padding: 0 32px;
-    }
- 
-    /* ── HERO ── */
-    .hero {
-      padding: 80px 0 60px;
-      border-bottom: 1px solid var(--border);
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 40px;
-      align-items: end;
-    }
- 
-    .hero-label {
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 3px;
-      color: var(--accent);
-      text-transform: uppercase;
-      margin-bottom: 20px;
-    }
- 
-    h1 {
-      font-family: var(--serif);
-      font-size: clamp(42px, 6vw, 68px);
-      font-weight: 700;
-      line-height: 1.05;
-      letter-spacing: -1px;
-      color: var(--text);
-    }
- 
-    h1 em {
-      font-style: italic;
-      color: var(--accent);
-    }
- 
-    .hero-sub {
-      margin-top: 20px;
-      font-size: 16px;
-      color: var(--muted);
-      font-family: var(--mono);
-      font-weight: 300;
-      line-height: 1.7;
-      max-width: 480px;
-    }
- 
-    .hero-contact {
-      margin-top: 32px;
-      display: flex;
-      gap: 24px;
-      align-items: center;
-    }
- 
-    .btn-primary {
-      font-family: var(--mono);
-      font-size: 12px;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      color: var(--bg);
-      background: var(--accent);
-      border: none;
-      padding: 12px 24px;
-      cursor: pointer;
-      text-decoration: none;
-      transition: background 0.2s, transform 0.15s;
-    }
-    .btn-primary:hover { background: #dfc088; transform: translateY(-1px); }
- 
-    .link-plain {
-      font-family: var(--mono);
-      font-size: 12px;
-      letter-spacing: 1px;
-      color: var(--muted);
-      text-decoration: none;
-      border-bottom: 1px solid var(--border-light);
-      padding-bottom: 2px;
-      transition: color 0.2s, border-color 0.2s;
-    }
-    .link-plain:hover { color: var(--text); border-color: var(--muted); }
- 
-    /* Stat card cluster */
-    .stat-cluster {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-      text-align: right;
-    }
- 
-    .stat-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      padding: 14px 20px;
-      min-width: 160px;
-    }
- 
-    .stat-card .s-label {
-      font-family: var(--mono);
-      font-size: 9px;
-      letter-spacing: 2px;
-      color: var(--muted);
-      text-transform: uppercase;
-    }
- 
-    .stat-card .s-val {
-      font-family: var(--mono);
-      font-size: 22px;
-      font-weight: 500;
-      color: var(--text);
-      margin-top: 4px;
-    }
- 
-    .stat-card .s-delta {
-      font-family: var(--mono);
-      font-size: 10px;
-      margin-top: 2px;
-    }
-    .up { color: var(--green); }
-    .dn { color: var(--red); }
- 
-    /* ── SECTIONS ── */
-    section {
-      padding: 60px 0;
-      border-bottom: 1px solid var(--border);
-    }
- 
-    .sec-header {
-      display: flex;
-      align-items: baseline;
-      gap: 16px;
-      margin-bottom: 40px;
-    }
- 
-    .sec-num {
-      font-family: var(--mono);
-      font-size: 10px;
-      color: var(--accent-dim);
-    }
- 
-    .sec-title {
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
- 
-    /* ── WORK / CARDS ── */
-    .work-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2px;
-    }
- 
-    .work-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      padding: 28px 28px 24px;
-      text-decoration: none;
-      display: block;
-      transition: border-color 0.2s, background 0.2s;
-      position: relative;
-      overflow: hidden;
-    }
- 
-    .work-card::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, transparent 60%, rgba(200, 169, 110, 0.04));
-      pointer-events: none;
-    }
- 
-    .work-card:hover {
-      border-color: var(--accent-dim);
-      background: #13151a;
-    }
- 
-    .work-card:hover .work-arrow { transform: translate(3px, -3px); }
- 
-    .work-tag {
-      font-family: var(--mono);
-      font-size: 9px;
-      letter-spacing: 2px;
-      color: var(--accent);
-      text-transform: uppercase;
-      margin-bottom: 14px;
-    }
- 
-    .work-title {
-      font-family: var(--serif);
-      font-size: 18px;
-      font-weight: 700;
-      color: var(--text);
-      line-height: 1.3;
-      margin-bottom: 10px;
-    }
- 
-    .work-desc {
-      font-family: var(--mono);
-      font-size: 12px;
-      color: var(--muted);
-      line-height: 1.6;
-      font-weight: 300;
-    }
- 
-    .work-footer {
+      padding: 56px 48px 0;
       display: flex;
       justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .hero-name {
+      font-family: var(--niloofar);
+      font-size: clamp(52px, 7vw, 80px);
+      font-weight: 700;
+      line-height: 0.95;
+      letter-spacing: -2px;
+      color: var(--navy);
+    }
+
+    .hero-name span { display: block; }
+
+    .monogram {
+      width: 48px;
+      height: 48px;
+      background: var(--navy);
+      color: var(--white);
+      font-family: var(--niloofar);
+      font-size: 16px;
+      font-weight: 700;
+      font-style: normal;
+      display: flex;
       align-items: center;
-      margin-top: 20px;
+      justify-content: center;
     }
- 
-    .work-meta {
-      font-family: var(--mono);
-      font-size: 10px;
-      color: var(--border-light);
+
+    .hero-sub-row {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 28px 48px 52px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
     }
- 
-    .work-arrow {
+
+    .hero-tagline {
+      font-family: var(--niloofar);
+      font-size: 17px;
+      color: var(--muted);
+      line-height: 1.75;
+      font-style: normal;
+      max-width: 460px;
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn-outline {
+      font-family: var(--niloofar);
+      font-size: 13px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--navy);
+      background: transparent;
+      border: 1.5px solid var(--navy);
+      padding: 10px 24px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .btn-outline:hover {
+      background: var(--navy);
+      color: var(--white);
+    }
+
+    /* PAGE BODY */
+    .page {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 48px;
+    }
+
+    section {
+      padding: 64px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .sec-label {
+      font-family: var(--niloofar);
       font-size: 14px;
-      color: var(--accent);
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--light-muted);
+      margin-bottom: 40px;
+    }
+
+    /* SELECTED WORK */
+    .work-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 40px;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+
+    .work-item:hover { opacity: 0.7; }
+    .work-item:hover .work-arrow { transform: translate(3px, -3px); }
+
+    .work-tag {
+      font-family: var(--niloofar);
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--light-muted);
+      margin-bottom: 10px;
+    }
+
+    .work-title {
+      font-family: var(--niloofar);
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+
+    .work-desc {
+      font-family: var(--niloofar);
+      font-size: 16px;
+      color: var(--muted);
+      line-height: 1.8;
+      max-width: 500px;
+    }
+
+    .work-arrow-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 10px;
+      flex-shrink: 0;
+      padding-top: 4px;
+    }
+
+    .work-filetype {
+      font-family: var(--niloofar);
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--light-muted);
+    }
+
+    .work-arrow {
+      font-size: 22px;
+      color: var(--navy);
+      display: block;
       transition: transform 0.2s;
     }
- 
-    /* ── SKILLS MATRIX ── */
-    .skills-matrix {
+
+    /* CORE COMPETENCIES */
+    .skills-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 2px;
+      gap: 0 48px;
     }
- 
-    .skill-group {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      padding: 24px;
-    }
- 
+
     .skill-group-title {
-      font-family: var(--mono);
-      font-size: 9px;
-      letter-spacing: 2.5px;
-      color: var(--accent);
+      font-family: var(--niloofar);
+      font-size: 13px;
+      letter-spacing: 3px;
       text-transform: uppercase;
-      margin-bottom: 16px;
+      color: var(--navy);
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
     }
- 
+
     .skill-list {
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 12px;
     }
- 
+
     .skill-list li {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-family: var(--mono);
-      font-size: 12px;
+      font-family: var(--niloofar);
+      font-size: 16px;
       color: var(--muted);
-      font-weight: 300;
-    }
- 
-    .skill-bar-wrap {
-      width: 60px;
-      height: 2px;
-      background: var(--border);
-    }
- 
-    .skill-bar {
-      height: 100%;
-      background: var(--accent);
-    }
- 
-    /* ── EXPERIENCE TIMELINE ── */
-    .timeline {
+      line-height: 1.5;
       display: flex;
-      flex-direction: column;
-      gap: 0;
+      align-items: center;
+      gap: 10px;
     }
- 
+
+    .skill-dot {
+      width: 4px;
+      height: 4px;
+      background: var(--navy);
+      border-radius: 50%;
+      flex-shrink: 0;
+      opacity: 0.35;
+    }
+
+    /* EXPERIENCE */
+    .timeline { display: flex; flex-direction: column; }
+
     .timeline-item {
       display: grid;
-      grid-template-columns: 140px 1fr;
+      grid-template-columns: 160px 1fr;
       gap: 32px;
-      padding: 24px 0;
+      padding: 36px 0;
       border-bottom: 1px solid var(--border);
-      position: relative;
     }
- 
-    .timeline-item:last-child { border-bottom: none; }
- 
+
+    .timeline-item:first-child { padding-top: 0; }
+    .timeline-item:last-child { border-bottom: none; padding-bottom: 0; }
+
     .t-period {
-      font-family: var(--mono);
-      font-size: 11px;
-      color: var(--muted);
-      font-weight: 300;
-      padding-top: 3px;
+      font-family: var(--niloofar);
+      font-size: 14px;
+      color: var(--light-muted);
+      padding-top: 4px;
     }
- 
+
     .t-role {
-      font-family: var(--serif);
-      font-size: 16px;
+      font-family: var(--niloofar);
+      font-size: 20px;
       font-weight: 700;
-      color: var(--text);
+      color: var(--navy);
       margin-bottom: 4px;
     }
- 
+
     .t-company {
-      font-family: var(--mono);
-      font-size: 12px;
-      color: var(--accent);
-      margin-bottom: 10px;
-      font-weight: 300;
-    }
- 
-    .t-desc {
-      font-family: var(--mono);
-      font-size: 12px;
+      font-family: var(--niloofar);
+      font-size: 13px;
       color: var(--muted);
-      line-height: 1.7;
-      font-weight: 300;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      margin-bottom: 14px;
     }
- 
-    /* ── FOOTER ── */
-    footer {
-      padding: 40px 0;
+
+    .t-desc {
+      font-family: var(--niloofar);
+      font-size: 16px;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    /* FOOTER */
+    .site-footer {
+      background: var(--navy);
+      padding: 32px 48px;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
- 
+
     .footer-name {
-      font-family: var(--serif);
-      font-size: 14px;
-      font-style: italic;
-      color: var(--muted);
+      font-family: var(--niloofar);
+      font-size: 16px;
+      font-style: normal;
+      color: rgba(237,232,223,0.75);
     }
- 
-    .footer-time {
-      font-family: var(--mono);
-      font-size: 10px;
-      color: var(--border-light);
+
+    .footer-year {
+      font-family: var(--niloofar);
+      font-size: 13px;
+      color: rgba(237,232,223,0.35);
       letter-spacing: 1px;
     }
- 
-    /* ── ANIMATIONS ── */
+
+    /* ANIMATIONS */
     .fade-in {
       opacity: 0;
-      transform: translateY(16px);
-      animation: fadeUp 0.7s ease forwards;
+      transform: translateY(12px);
+      animation: fadeUp 0.65s ease forwards;
     }
- 
-    @keyframes fadeUp {
-      to { opacity: 1; transform: translateY(0); }
-    }
- 
-    .fade-in:nth-child(1) { animation-delay: 0.1s; }
-    .fade-in:nth-child(2) { animation-delay: 0.25s; }
-    .fade-in:nth-child(3) { animation-delay: 0.4s; }
-    .fade-in:nth-child(4) { animation-delay: 0.55s; }
- 
-    /* ── RESPONSIVE ── */
+
+    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+
+    .fade-in:nth-child(1) { animation-delay: 0.05s; }
+    .fade-in:nth-child(2) { animation-delay: 0.18s; }
+    .fade-in:nth-child(3) { animation-delay: 0.3s; }
+    .fade-in:nth-child(4) { animation-delay: 0.42s; }
+
+    /* RESPONSIVE */
     @media (max-width: 680px) {
-      .hero { grid-template-columns: 1fr; }
-      .stat-cluster { flex-direction: row; flex-wrap: wrap; text-align: left; }
-      .work-grid { grid-template-columns: 1fr; }
-      .skills-matrix { grid-template-columns: 1fr; }
-      .timeline-item { grid-template-columns: 1fr; gap: 4px; }
-      .t-period { font-size: 10px; }
-      footer { flex-direction: column; gap: 12px; text-align: center; }
+      .hero-inner { padding: 40px 24px 0; }
+      .hero-sub-row { padding: 24px 24px 40px; flex-direction: column; align-items: flex-start; }
+      .page { padding: 0 24px; }
+      .skills-grid { grid-template-columns: 1fr; gap: 36px 0; }
+      .timeline-item { grid-template-columns: 1fr; gap: 6px; }
+      .site-footer { padding: 28px 24px; flex-direction: column; gap: 10px; text-align: center; }
     }
   </style>
 </head>
 <body>
- 
-<div class="page">
- 
-  <!-- HERO -->
-  <header class="hero">
-    <div class="fade-in">
-      <div class="hero-label">Financial Planning &amp; Analysis</div>
-      <h1>Abhishek<br><em>Kaushish</em></h1>
-      <p class="hero-sub">
-        Building clarity from complexity — budgets, forecasts,<br>
+
+  <!-- WHITE HERO BANNER -->
+  <div class="hero-banner">
+    <div class="hero-inner fade-in">
+      <div class="hero-name">
+        <span>Abhishek</span>
+        <span>Kaushish</span>
+      </div>
+      <div class="monogram">AK</div>
+    </div>
+    <div class="hero-sub-row fade-in">
+      <p class="hero-tagline">
+        Building clarity from complexity — budgets, forecasts,
         and strategic models that drive decisions.
       </p>
-      <div class="hero-contact">
-        <a class="btn-primary" href="mailto:abhishek@abhishekkaushish.com">Get in touch</a>
-        <a class="link-plain" href="report/india-10y-gsec-analysis.pdf" target="_blank">View latest report ↗</a>
+      <div class="hero-btns">
+        <a class="btn-outline" href="mailto:abhishek@abhishekkaushish.com">Get in Touch</a>
+        <a class="btn-outline" href="resume/abhishek-kaushish-resume.pdf" target="_blank">Get Resume</a>
       </div>
     </div>
-  </header>
- 
-  <!-- SELECTED WORK -->
-  <section>
-    <div class="sec-header fade-in">
-      <span class="sec-num">01</span>
-      <span class="sec-title">Selected Work</span>
-    </div>
-    <div class="work-grid">
-      <a class="work-card fade-in" href="report/india-10y-gsec-analysis.pdf" target="_blank">
-        <div class="work-tag">Fixed Income · Research</div>
-        <div class="work-title">India 10Y G-Sec Analysis</div>
-        <div class="work-desc">
-          Macro-driven deep dive into sovereign yield drivers — RBI policy path, inflation expectations, and foreign flows.
+  </div>
+
+  <!-- CREAM BODY -->
+  <div class="page">
+
+    <!-- SELECTED WORK -->
+    <section>
+      <div class="sec-label">Selected Work</div>
+      <a class="work-item fade-in" href="models/integrated-model.xlsx" download>
+        <div>
+          <div class="work-tag">FP&amp;A · Financial Modelling</div>
+          <div class="work-title">3-Statement Integrated Model</div>
+          <div class="work-desc">
+            Driver-based revenue build with full income statement, balance sheet, and cash flow integration. Includes scenario toggles and variance waterfall.
+          </div>
         </div>
-        <div class="work-footer">
-          <span class="work-meta">PDF · 2024</span>
+        <div class="work-arrow-wrap">
+          <span class="work-filetype">XLSX</span>
           <span class="work-arrow">↗</span>
         </div>
       </a>
- 
-      <div class="work-card fade-in" style="cursor:default; opacity:0.45;">
-        <div class="work-tag">FP&amp;A · Modelling</div>
-        <div class="work-title">3-Statement<br>Integrated Model</div>
-        <div class="work-desc">
-          Revenue build + scenario planning. Coming soon.
+    </section>
+
+    <!-- CORE COMPETENCIES -->
+    <section>
+      <div class="sec-label">Core Competencies</div>
+      <div class="skills-grid">
+        <div class="fade-in">
+          <div class="skill-group-title">Planning &amp; Analysis</div>
+          <ul class="skill-list">
+            <li><span class="skill-dot"></span>Budgeting &amp; Forecasting</li>
+            <li><span class="skill-dot"></span>Variance Analysis</li>
+            <li><span class="skill-dot"></span>Scenario Modelling</li>
+            <li><span class="skill-dot"></span>Business Partnering</li>
+          </ul>
         </div>
-        <div class="work-footer">
-          <span class="work-meta">Excel · Upcoming</span>
-          <span class="work-arrow" style="color:var(--muted)">—</span>
+        <div class="fade-in">
+          <div class="skill-group-title">Tools &amp; Tech</div>
+          <ul class="skill-list">
+            <li><span class="skill-dot"></span>Excel / Power Query</li>
+            <li><span class="skill-dot"></span>Power BI</li>
+            <li><span class="skill-dot"></span>PowerPoint</li>
+            <li><span class="skill-dot"></span>SAP HANA</li>
+          </ul>
         </div>
-      </div>
-    </div>
-  </section>
- 
-  <!-- SKILLS -->
-  <section>
-    <div class="sec-header fade-in">
-      <span class="sec-num">02</span>
-      <span class="sec-title">Core Competencies</span>
-    </div>
-    <div class="skills-matrix">
-      <div class="skill-group fade-in">
-        <div class="skill-group-title">Planning &amp; Analysis</div>
-        <ul class="skill-list">
-          <li>Budgeting &amp; Forecasting <div class="skill-bar-wrap"><div class="skill-bar" style="width:90%"></div></div></li>
-          <li>Variance Analysis <div class="skill-bar-wrap"><div class="skill-bar" style="width:85%"></div></div></li>
-          <li>Scenario Modelling <div class="skill-bar-wrap"><div class="skill-bar" style="width:80%"></div></div></li>
-          <li>Business Partnering <div class="skill-bar-wrap"><div class="skill-bar" style="width:75%"></div></div></li>
-        </ul>
-      </div>
-      <div class="skill-group fade-in">
-        <div class="skill-group-title">Tools &amp; Tech</div>
-        <ul class="skill-list">
-          <li>Excel / Power Query <div class="skill-bar-wrap"><div class="skill-bar" style="width:95%"></div></div></li>
-          <li>Power BI <div class="skill-bar-wrap"><div class="skill-bar" style="width:70%"></div></div></li>
-          <li>PowerPoint <div class="skill-bar-wrap"><div class="skill-bar" style="width:65%"></div></div></li>
-          <li>SAP HANA <div class="skill-bar-wrap"><div class="skill-bar" style="width:55%"></div></div></li>
-        </ul>
-      </div>
-      <div class="skill-group fade-in">
-        <div class="skill-group-title">Finance</div>
-        <ul class="skill-list">
-          <li>Financial Statements <div class="skill-bar-wrap"><div class="skill-bar" style="width:90%"></div></div></li>
-          <li>DCF / Valuation <div class="skill-bar-wrap"><div class="skill-bar" style="width:80%"></div></div></li>
-          <li>Financial Modeling <div class="skill-bar-wrap"><div class="skill-bar" style="width:75%"></div></div></li>
-          <li>MIS Reporting <div class="skill-bar-wrap"><div class="skill-bar" style="width:85%"></div></div></li>
-        </ul>
-      </div>
-    </div>
-  </section>
- 
-  <!-- EXPERIENCE -->
-  <section>
-    <div class="sec-header fade-in">
-      <span class="sec-num">03</span>
-      <span class="sec-title">Experience</span>
-    </div>
-    <div class="timeline">
-      <div class="timeline-item fade-in">
-        <div class="t-period">2025 — Present</div>
-        <div>
-          <div class="t-role">FP&amp;A Analyst</div>
-          <div class="t-company">Deloitte</div>
-          <div class="t-desc">Own the monthly forecast cycle for Compensation, manage actuals vs. budget reporting for Consulting, and build driver-based models to support strategic planning.</div>
+        <div class="fade-in">
+          <div class="skill-group-title">Finance</div>
+          <ul class="skill-list">
+            <li><span class="skill-dot"></span>Financial Statements</li>
+            <li><span class="skill-dot"></span>DCF / Valuation</li>
+            <li><span class="skill-dot"></span>Financial Modeling</li>
+            <li><span class="skill-dot"></span>MIS Reporting</li>
+          </ul>
         </div>
       </div>
-      <div class="timeline-item fade-in">
-        <div class="t-period">2022 — 2025</div>
-        <div>
-          <div class="t-role">Financial Analyst</div>
-          <div class="t-company">EXL Service</div>
-          <div class="t-desc">Delivered variance commentary, built KPI dashboards, and partnered with business units on annual operating plans for US Property &amp; Casualty Insurance.</div>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section>
+      <div class="sec-label">Experience</div>
+      <div class="timeline">
+        <div class="timeline-item fade-in">
+          <div class="t-period">2025 — Present</div>
+          <div>
+            <div class="t-role">FP&amp;A Analyst</div>
+            <div class="t-company">Deloitte</div>
+            <div class="t-desc">Own the monthly forecast cycle for Compensation, manage actuals vs. budget reporting for Consulting, and build driver-based models to support strategic planning.</div>
+          </div>
+        </div>
+        <div class="timeline-item fade-in">
+          <div class="t-period">2022 — 2025</div>
+          <div>
+            <div class="t-role">Financial Analyst</div>
+            <div class="t-company">EXL Service</div>
+            <div class="t-desc">Delivered variance commentary, built KPI dashboards, and partnered with business units on annual operating plans for US Property &amp; Casualty Insurance.</div>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
- 
+    </section>
+
+  </div>
+
   <!-- FOOTER -->
-  <footer>
+  <footer class="site-footer">
     <div class="footer-name">Abhishek Kaushish</div>
-    <div class="footer-time" id="clock"></div>
+    <div class="footer-year" id="yr"></div>
   </footer>
- 
-</div>
- 
-<script>
-  function updateClock() {
-    const now = new Date();
-    document.getElementById('clock').textContent =
-      now.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', second: '2-digit' })
-      + ' IST';
-  }
-  setInterval(updateClock, 1000);
-  updateClock();
-</script>
+
+  <script>
+    document.getElementById('yr').textContent =
+      new Date().getFullYear() + ' · Abhishek Kaushish';
+  </script>
+
 </body>
 </html>
- 
