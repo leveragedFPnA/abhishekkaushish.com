@@ -1,8 +1,276 @@
 <!doctype html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-  </head>
-  <body style="margin:0;min-height:100vh;background:#FDFBF7;"></body>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <style>
+    :root {
+      --dl-green: #86BC25;
+      --dl-green-dark: #6B9A1E;
+      --dl-neon: #86EB22;
+      --dl-blue: #00A3E0;
+      --dl-blue-dark: #005587;
+      --dl-black: #0A0A0A;
+      --dl-charcoal: #282728;
+      --dl-gray-900: #1A1A1A;
+      --dl-gray-100: #F5F5F5;
+      --dl-gray-200: #E6E6E6;
+      --dl-white: #FFFFFF;
+      --chalk: #F3F7F8;
+      --navy: #123746;
+      --blue: #005587;
+      --cyan: #00A3E0;
+      --mist: #62B5E5;
+      --ochre: #A88C61;
+      --oxblood: #603640;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+      background: var(--chalk);
+    }
+
+    body {
+      cursor: crosshair;
+    }
+
+    .art {
+      position: fixed;
+      inset: 0;
+      overflow: hidden;
+      background: var(--chalk);
+    }
+
+    canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    .art::before {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      content: "";
+      opacity: .16;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23grain)' opacity='.32'/%3E%3C/svg%3E");
+      mix-blend-mode: multiply;
+    }
+
+    .art::after {
+      position: absolute;
+      inset: 5vw;
+      z-index: 3;
+      pointer-events: none;
+      border: 1px solid rgba(18, 55, 70, .24);
+      content: "";
+    }
+
+    @media (max-width: 700px) {
+      .art::after {
+        inset: 4vw;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      canvas {
+        opacity: .96;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="art" aria-hidden="true">
+    <canvas id="canvas"></canvas>
+  </main>
+
+  <script>
+    (() => {
+      const canvas = document.getElementById("canvas");
+      const context = canvas.getContext("2d");
+      const pointer = { x: 0, y: 0 };
+      const target = { x: 0, y: 0 };
+      const fields = [
+        { x: .18, y: .21, r: .34, color: [0, 163, 224], alpha: .22, speed: .21 },
+        { x: .76, y: .24, r: .42, color: [0, 85, 135], alpha: .19, speed: -.16 },
+        { x: .55, y: .76, r: .44, color: [18, 55, 70], alpha: .16, speed: .13 },
+        { x: .15, y: .76, r: .27, color: [96, 54, 64], alpha: .09, speed: -.11 }
+      ];
+      let width = 0;
+      let height = 0;
+      let dpr = 1;
+
+      function resize() {
+        dpr = Math.min(window.devicePixelRatio || 1, 2);
+        width = window.innerWidth;
+        height = window.innerHeight;
+        canvas.width = width * dpr;
+        canvas.height = height * dpr;
+        context.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+
+      function background() {
+        context.fillStyle = "#F3F7F8";
+        context.fillRect(0, 0, width, height);
+      }
+
+      function drawField(field, time) {
+        const drift = Math.sin(time * field.speed + field.x * 9) * 24;
+        const x = width * field.x + drift + pointer.x * 22;
+        const y = height * field.y + Math.cos(time * field.speed) * 18 + pointer.y * 16;
+        const radius = Math.max(width, height) * field.r;
+        const [red, green, blue] = field.color;
+        const gradient = context.createRadialGradient(x, y, 0, x, y, radius);
+
+        gradient.addColorStop(0, `rgba(${red},${green},${blue},${field.alpha})`);
+        gradient.addColorStop(.48, `rgba(${red},${green},${blue},${field.alpha * .42})`);
+        gradient.addColorStop(1, `rgba(${red},${green},${blue},0)`);
+
+        context.fillStyle = gradient;
+        context.fillRect(0, 0, width, height);
+      }
+
+      function drawMineralForms(time) {
+        const forms = [
+          { x: .69, y: .34, w: .24, h: .42, r: -.3, c: "rgba(0,85,135,.16)" },
+          { x: .30, y: .68, w: .34, h: .2, r: .18, c: "rgba(0,163,224,.13)" },
+          { x: .49, y: .25, w: .12, h: .29, r: .68, c: "rgba(18,55,70,.1)" }
+        ];
+
+        forms.forEach((form, index) => {
+          const breathing = 1 + Math.sin(time * .22 + index) * .025;
+          context.save();
+          context.translate(width * form.x + pointer.x * (index + 1) * 8, height * form.y + pointer.y * 8);
+          context.rotate(form.r + Math.sin(time * .12 + index) * .025);
+          context.scale(breathing, breathing);
+          context.beginPath();
+          context.ellipse(0, 0, width * form.w, height * form.h, 0, 0, Math.PI * 2);
+          context.fillStyle = form.c;
+          context.fill();
+          context.restore();
+        });
+      }
+
+      function drawRibbon(time, offset, color, alpha, widthScale) {
+        const centerX = width * (.48 + Math.sin(time * .17 + offset) * .04);
+        const centerY = height * (.52 + Math.cos(time * .14 + offset) * .04);
+        const spread = Math.min(width, height) * widthScale;
+        const lift = Math.sin(time * .2 + offset) * spread * .08;
+
+        context.save();
+        context.translate(pointer.x * 12, pointer.y * 10);
+        context.beginPath();
+        context.moveTo(centerX - spread, centerY + spread * .26);
+        context.bezierCurveTo(
+          centerX - spread * .54,
+          centerY - spread * .72 + lift,
+          centerX + spread * .14,
+          centerY + spread * .76,
+          centerX + spread,
+          centerY - spread * .22
+        );
+        context.strokeStyle = color;
+        context.globalAlpha = alpha;
+        context.lineWidth = Math.max(1, width * .0012);
+        context.stroke();
+        context.restore();
+      }
+
+      function drawArcs(time) {
+        const x = width * .51 + pointer.x * 14;
+        const y = height * .5 + pointer.y * 12;
+        const radius = Math.min(width, height) * .28;
+
+        context.save();
+        context.translate(x, y);
+        context.rotate(time * .018);
+        context.globalAlpha = .34;
+        context.lineWidth = 1;
+        context.strokeStyle = "#005587";
+
+        [1, .78, .54].forEach((scale, index) => {
+          context.beginPath();
+          context.arc(0, 0, radius * scale, -.92 + index * .18, 1.68 + index * .14);
+          context.stroke();
+        });
+
+        context.globalAlpha = .2;
+        context.strokeStyle = "#A88C61";
+        context.beginPath();
+        context.arc(0, 0, radius * 1.12, 2.1, 5.15);
+        context.stroke();
+        context.restore();
+      }
+
+      function drawGrainDust(time) {
+        const count = Math.min(160, Math.floor(width * height / 11000));
+        context.save();
+        context.fillStyle = "#005587";
+        context.globalAlpha = .12;
+
+        for (let index = 0; index < count; index += 1) {
+          const x = (index * 97 + time * (index % 3 + 1) * .12) % width;
+          const y = (index * 53 + Math.sin(time * .1 + index) * 8) % height;
+          const size = index % 5 === 0 ? 1.5 : .7;
+          context.fillRect(x, y, size, size);
+        }
+
+        context.restore();
+      }
+
+      function drawAccent() {
+        context.save();
+        context.fillStyle = "#86BC25";
+        context.globalAlpha = .72;
+        context.beginPath();
+        context.arc(width * .84, height * .16, 2.5, 0, Math.PI * 2);
+        context.fill();
+        context.restore();
+      }
+
+      function render(milliseconds) {
+        const time = milliseconds * .001;
+        pointer.x += (target.x - pointer.x) * .025;
+        pointer.y += (target.y - pointer.y) * .025;
+
+        background();
+        fields.forEach(field => drawField(field, time));
+        drawMineralForms(time);
+        drawRibbon(time, 0, "#003B5C", .32, .37);
+        drawRibbon(time, 2.4, "#00A3E0", .24, .3);
+        drawRibbon(time, 4.8, "#603640", .16, .24);
+        drawArcs(time);
+        drawGrainDust(time);
+        drawAccent();
+
+        window.requestAnimationFrame(render);
+      }
+
+      window.addEventListener("resize", resize);
+
+      window.addEventListener("pointermove", event => {
+        target.x = (event.clientX / width - .5) * 2;
+        target.y = (event.clientY / height - .5) * 2;
+      }, { passive: true });
+
+      window.addEventListener("pointerleave", () => {
+        target.x = 0;
+        target.y = 0;
+      });
+
+      resize();
+      window.requestAnimationFrame(render);
+    })();
+  </script>
+</body>
 </html>
