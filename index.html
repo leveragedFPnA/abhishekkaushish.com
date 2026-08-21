@@ -1,597 +1,177 @@
+<!-- filename: abhishek-kaushish-portfolio.html -->
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="robots" content="noindex, nofollow, noarchive">
+  <title>Abhishek Kaushish — FP&amp;A</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --dl-green: #86BC25;
-      --dl-green-dark: #6B9A1E;
-      --dl-neon: #86EB22;
-      --dl-blue: #00A3E0;
-      --dl-blue-dark: #005587;
-      --dl-black: #0A0A0A;
-      --dl-charcoal: #282728;
-      --dl-gray-900: #1A1A1A;
-      --dl-gray-100: #F5F5F5;
-      --dl-gray-200: #E6E6E6;
-      --dl-white: #FFFFFF;
-      --chalk: #F3F7F8;
-      --navy: #123746;
-      --blue: #005587;
-      --cyan: #00A3E0;
-      --mist: #62B5E5;
-      --ochre: #A88C61;
-      --oxblood: #603640;
+    :root{
+      --bg:#0A0A0C; --panel:#111114; --line:rgba(255,255,255,.09);
+      --white:#F7F7F9; --muted:#9A9AA3; --orange:255,138,58; --blue:150,196,255;
     }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    html,
-    body {
-      width: 100%;
-      height: 100%;
-      margin: 0;
-      overflow: hidden;
-      background: var(--chalk);
-    }
-
-    body {
-      cursor: crosshair;
-    }
-
-    .art {
-      position: fixed;
-      inset: 0;
-      overflow: hidden;
-      background: var(--chalk);
-    }
-
-    canvas {
-      display: block;
-      width: 100%;
-      height: 100%;
-    }
-
-    #canvas {
-      position: absolute;
-      inset: 0;
-      z-index: 0;
-    }
-
-    #fx {
-      position: absolute;
-      inset: 0;
-      z-index: 1;
-      pointer-events: none;
-    }
-
-    .art::before {
-      position: absolute;
-      inset: 0;
-      z-index: 2;
-      pointer-events: none;
-      content: "";
-      opacity: .16;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23grain)' opacity='.32'/%3E%3C/svg%3E");
-      mix-blend-mode: multiply;
-    }
-
-    .art::after {
-      position: absolute;
-      inset: 5vw;
-      z-index: 3;
-      pointer-events: none;
-      border: 1px solid rgba(18, 55, 70, .24);
-      content: "";
-    }
-
-    @media (max-width: 700px) {
-      .art::after {
-        inset: 4vw;
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      canvas {
-        opacity: .96;
-      }
-    }
-
-    /* ---- Birthday wish overlay (temporary) ---- */
-    .wish {
-      position: fixed;
-      inset: 0;
-      z-index: 5;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 8vw;
-      pointer-events: none;
-      opacity: 0;
-      animation: wishIn 1.6s ease-out .3s forwards, wishOut 1.8s ease-in 9s forwards;
-    }
-
-    .wish-inner {
-      max-width: 640px;
-    }
-
-    .wish-eyebrow {
-      font-family: Georgia, 'Times New Roman', serif;
-      font-size: clamp(11px, 1.6vw, 14px);
-      letter-spacing: .42em;
-      text-transform: uppercase;
-      color: var(--blue);
-      margin: 0 0 18px;
-      opacity: .82;
-    }
-
-    .wish-title {
-      font-family: Georgia, 'Times New Roman', serif;
-      font-weight: 400;
-      font-size: clamp(30px, 6vw, 58px);
-      line-height: 1.12;
-      color: var(--navy);
-      margin: 0 0 20px;
-      letter-spacing: .01em;
-    }
-
-    .wish-title em {
-      font-style: italic;
-      color: var(--dl-blue-dark);
-    }
-
-    .wish-body {
-      font-family: Georgia, 'Times New Roman', serif;
-      font-size: clamp(14px, 2vw, 18px);
-      line-height: 1.65;
-      color: var(--dl-charcoal);
-      margin: 0;
-      opacity: .88;
-    }
-
-    .wish-sign {
-      margin-top: 26px;
-      font-family: Georgia, 'Times New Roman', serif;
-      font-style: italic;
-      font-size: clamp(13px, 1.8vw, 16px);
-      color: var(--oxblood);
-      opacity: .8;
-    }
-
-    @keyframes wishIn {
-      from { opacity: 0; transform: translateY(14px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes wishOut {
-      from { opacity: 1; }
-      to   { opacity: 0; visibility: hidden; }
-    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}                       /* anchor jumps now glide */
+    body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--white);overflow-x:hidden}
+    .blob{position:fixed;border-radius:50%;filter:blur(90px);pointer-events:none;z-index:0;
+      will-change:transform;transition:transform .6s ease-out}
+    .blob-orange{width:60vw;height:60vw;left:-18vw;top:4vh;opacity:.18;
+      background:radial-gradient(circle,rgba(var(--orange),1) 0%,rgba(var(--orange),0) 70%)}
+    .blob-blue{width:52vw;height:52vw;right:-14vw;top:-6vh;opacity:.26;
+      background:radial-gradient(circle,rgba(var(--blue),1) 0%,rgba(var(--blue),0) 70%)}
+    .grain{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.04;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+    .wrap{position:relative;z-index:2;max-width:960px;margin:0 auto;padding:0 24px}
+    .accent{background:linear-gradient(100deg,rgba(var(--orange),1),rgba(var(--blue),1));
+      -webkit-background-clip:text;background-clip:text;color:transparent}
+    /* hero */
+    header{min-height:100vh;display:flex;flex-direction:column;align-items:center;
+      justify-content:center;text-align:center}
+    .tag{display:inline-block;font-size:12px;font-weight:500;letter-spacing:.28em;text-transform:uppercase;
+      color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:8px 18px;
+      margin-bottom:32px;background:rgba(255,255,255,.03)}
+    h1{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(40px,7.5vw,86px);
+      line-height:1.04;letter-spacing:-.03em;max-width:14ch}
+    .sub{font-size:clamp(15px,2vw,19px);color:var(--muted);max-width:560px;margin:28px auto 0;line-height:1.6}
+    .meta{font-size:13px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:22px}
+    .cta{margin-top:40px;display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
+    .btn{font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:15px;padding:14px 30px;
+      border-radius:999px;text-decoration:none;transition:all .18s ease}
+    .btn-primary{background:var(--white);color:var(--bg)}
+    .btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(255,255,255,.15)}
+    .btn-ghost{border:1px solid rgba(255,255,255,.22);color:var(--white)}
+    .btn-ghost:hover{border-color:var(--white);background:rgba(255,255,255,.05)}
+    /* sections */
+    section{padding:80px 0;scroll-margin-top:24px}       /* clean anchor landing */
+    footer{scroll-margin-top:24px}
+    .eyebrow{font-size:12px;font-weight:500;letter-spacing:.24em;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+    h2{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(28px,4.4vw,46px);
+      letter-spacing:-.02em;margin-bottom:40px}
+    .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:16px}
+    .stat{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:28px}
+    .stat b{font-family:'Space Grotesk',sans-serif;display:block;font-size:44px;font-weight:700;letter-spacing:-.02em}
+    .stat small{color:var(--muted);font-size:14px}
+    .job{border-left:1px solid var(--line);padding:0 0 40px 28px;position:relative}
+    .job::before{content:"";position:absolute;left:-5px;top:6px;width:10px;height:10px;border-radius:50%;
+      background:linear-gradient(rgba(var(--orange),1),rgba(var(--blue),1))}
+    .job h3{font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:500}
+    .job .role{color:var(--muted);font-size:14px;font-weight:500;letter-spacing:.06em;margin:4px 0 16px;text-transform:uppercase}
+    .job ul{list-style:none;display:grid;gap:10px}
+    .job li{padding-left:22px;position:relative;color:var(--muted);font-size:15px;line-height:1.55}
+    .job li::before{content:"";position:absolute;left:0;top:9px;width:6px;height:6px;border-radius:50%;background:rgba(var(--orange),.8)}
+    .chips{display:flex;flex-wrap:wrap;gap:10px}
+    .chip{background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:10px 18px;
+      font-size:14px;font-weight:500;transition:all .18s ease}
+    .chip:hover{border-color:rgba(var(--blue),.6);color:#fff}
+    footer{padding:90px 0;text-align:center;border-top:1px solid var(--line)}
+    footer a{color:var(--white);text-decoration:none;font-weight:500;border-bottom:1px solid transparent;transition:border .18s ease}
+    footer a:hover{border-color:rgba(var(--blue),.8)}
+    .links{margin-top:24px;display:flex;gap:24px;justify-content:center;flex-wrap:wrap;color:var(--muted)}
+    .reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+    .reveal.in{opacity:1;transform:none}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.blob{transition:none}.reveal{opacity:1;transform:none;transition:none}}
   </style>
 </head>
 <body>
-  <main class="art" aria-hidden="true">
-    <canvas id="canvas"></canvas>
-    <canvas id="fx"></canvas>
-  </main>
+  <div class="blob blob-orange" id="blobA" aria-hidden="true"></div>
+  <div class="blob blob-blue" id="blobB" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
 
-  <section class="wish" role="status">
-    <div class="wish-inner">
-      <p class="wish-eyebrow">08 August</p>
-      <h1 class="wish-title">Happy Birthday,<br><em>Aditi</em></h1>
-      <p class="wish-body">
-        Another year, another reason to celebrate you — your warmth, your laugh, and the
-        way you make everything around you a little brighter. May this year bring you
-        every bit of joy you give to the people around you.
-      </p>
-      <p class="wish-sign">With love, always — your brother</p>
+  <header class="wrap">
+    <span class="tag">Abhishek Kaushish</span>
+    <h1>I turn month-end chaos into <span class="accent">same-day decisions.</span></h1>
+    <p class="sub">FP&amp;A built for speed — forecasting, planning and finance automation that gets leaders the numbers before the meeting, not after.</p>
+    <p class="meta">FP&amp;A · ~4 yrs · Deloitte USI</p>
+    <div class="cta">
+      <a class="btn btn-primary" href="#work">See my work</a>
+      <!-- direct mailto: opens the email client in one click -->
+      <a class="btn btn-ghost" href="mailto:kaushishh.abhishek@gmail.com">Get in touch</a>
+    </div>
+  </header>
+
+  <section class="wrap reveal">
+    <p class="eyebrow">By the numbers</p>
+    <h2>Impact I've shipped</h2>
+    <div class="stats">
+      <div class="stat"><b class="accent">$100M+</b><small>Compensation planned across 500+ employees</small></div>
+      <div class="stat"><b class="accent">65%</b><small>Faster close-cycle reporting via automation</small></div>
+      <div class="stat"><b class="accent">30%</b><small>Less rework using standardized templates</small></div>
+      <div class="stat"><b class="accent">13</b><small>Cost centers owned end-to-end</small></div>
     </div>
   </section>
 
+  <section class="wrap reveal" id="work">
+    <p class="eyebrow">Experience</p>
+    <h2>Where I've built things</h2>
+    <div class="job">
+      <h3>Deloitte USI</h3>
+      <p class="role">FP&amp;A Analyst · May 2025 – Present · Hyderabad</p>
+      <ul>
+        <li>Own budgeting &amp; forecasting for $100M+ compensation across 500+ employees and 13 cost centers, partnering with 15+ business leaders.</li>
+        <li>Lead monthly OpEx analysis across 3 verticals ($25M spend), turning variances into risks, opportunities and spend actions.</li>
+        <li>Own month-end close for accruals, reclassifications and cost-center reporting feeding forecasts and management reporting.</li>
+        <li>Redesigned &amp; automated close reporting in Excel — 65% faster turnaround, ~8 hrs saved monthly.</li>
+      </ul>
+    </div>
+    <div class="job">
+      <h3>EXL Service</h3>
+      <p class="role">Assistant Manager → Senior Associate, FP&amp;A · Sep 2022 – May 2025 · Noida</p>
+      <ul>
+        <li>Owned reporting, forecasting &amp; trend analysis for Liberty Mutual's Distribution vertical across monthly/quarterly cycles.</li>
+        <li>Prepared quarterly earnings decks for Investor Relations — premium growth, policy sales and loss-ratio trends.</li>
+        <li>Integrated 3 Power BI datasets into Excel reporting, saving 4 hrs/month and speeding trend analysis.</li>
+        <li>Automated close with LET/HSTACK/VSTACK templates, cutting rework &amp; review cycles by 30%.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="wrap reveal">
+    <p class="eyebrow">Toolkit</p>
+    <h2>What I work with</h2>
+    <div class="chips">
+      <span class="chip">Advanced Excel &amp; VBA</span><span class="chip">Power BI (DAX)</span>
+      <span class="chip">Anaplan</span><span class="chip">SAP</span><span class="chip">Essbase</span>
+      <span class="chip">S&amp;P Global</span><span class="chip">Budgeting &amp; Forecasting</span>
+      <span class="chip">Variance Analysis</span><span class="chip">Headcount Planning</span>
+      <span class="chip">Financial Modelling</span><span class="chip">Month-End Close</span>
+      <span class="chip">Management Reporting</span>
+    </div>
+  </section>
+
+  <footer class="wrap reveal" id="contact">
+    <p class="eyebrow">Let's talk</p>
+    <h2>Building the finance function's <span class="accent">future.</span></h2>
+    <div class="links">
+      <a href="mailto:kaushishh.abhishek@gmail.com">kaushishh.abhishek@gmail.com</a>
+      <a href="tel:+918708786419">+91 8708786419</a>
+      <a href="https://linkedin.com/in/abhishek-kaushish/" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+  </footer>
+
   <script>
+    // filename: abhishek-kaushish-portfolio.html
     (() => {
-      const canvas = document.getElementById("canvas");
-      const context = canvas.getContext("2d");
-      const pointer = { x: 0, y: 0 };
-      const target = { x: 0, y: 0 };
-      const fields = [
-        { x: .18, y: .21, r: .34, color: [0, 163, 224], alpha: .22, speed: .21 },
-        { x: .76, y: .24, r: .42, color: [0, 85, 135], alpha: .19, speed: -.16 },
-        { x: .55, y: .76, r: .44, color: [18, 55, 70], alpha: .16, speed: .13 },
-        { x: .15, y: .76, r: .27, color: [96, 54, 64], alpha: .09, speed: -.11 }
-      ];
-      let width = 0;
-      let height = 0;
-      let dpr = 1;
+      const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-      function resize() {
-        dpr = Math.min(window.devicePixelRatio || 1, 2);
-        width = window.innerWidth;
-        height = window.innerHeight;
-        canvas.width = width * dpr;
-        canvas.height = height * dpr;
-        context.setTransform(dpr, 0, 0, dpr, 0, 0);
-        resizeFx();
+      // Parallax drift on the ambient blobs (decorative; skipped for reduced-motion).
+      if (!reduce) {
+        const a = document.getElementById("blobA");
+        const b = document.getElementById("blobB");
+        addEventListener("pointermove", (e) => {
+          const nx = e.clientX / innerWidth - .5;   // -0.5..0.5, centered
+          const ny = e.clientY / innerHeight - .5;
+          a.style.transform = `translate(${nx * 40}px, ${ny * 40}px)`;
+          b.style.transform = `translate(${nx * -30}px, ${ny * -30}px)`; // opposite = depth
+        }, { passive: true });
       }
 
-      function background() {
-        context.fillStyle = "#F3F7F8";
-        context.fillRect(0, 0, width, height);
-      }
-
-      function drawField(field, time) {
-        const drift = Math.sin(time * field.speed + field.x * 9) * 24;
-        const x = width * field.x + drift + pointer.x * 22;
-        const y = height * field.y + Math.cos(time * field.speed) * 18 + pointer.y * 16;
-        const radius = Math.max(width, height) * field.r;
-        const [red, green, blue] = field.color;
-        const gradient = context.createRadialGradient(x, y, 0, x, y, radius);
-
-        gradient.addColorStop(0, `rgba(${red},${green},${blue},${field.alpha})`);
-        gradient.addColorStop(.48, `rgba(${red},${green},${blue},${field.alpha * .42})`);
-        gradient.addColorStop(1, `rgba(${red},${green},${blue},0)`);
-
-        context.fillStyle = gradient;
-        context.fillRect(0, 0, width, height);
-      }
-
-      function drawMineralForms(time) {
-        const forms = [
-          { x: .69, y: .34, w: .24, h: .42, r: -.3, c: "rgba(0,85,135,.16)" },
-          { x: .30, y: .68, w: .34, h: .2, r: .18, c: "rgba(0,163,224,.13)" },
-          { x: .49, y: .25, w: .12, h: .29, r: .68, c: "rgba(18,55,70,.1)" }
-        ];
-
-        forms.forEach((form, index) => {
-          const breathing = 1 + Math.sin(time * .22 + index) * .025;
-          context.save();
-          context.translate(width * form.x + pointer.x * (index + 1) * 8, height * form.y + pointer.y * 8);
-          context.rotate(form.r + Math.sin(time * .12 + index) * .025);
-          context.scale(breathing, breathing);
-          context.beginPath();
-          context.ellipse(0, 0, width * form.w, height * form.h, 0, 0, Math.PI * 2);
-          context.fillStyle = form.c;
-          context.fill();
-          context.restore();
-        });
-      }
-
-      function drawRibbon(time, offset, color, alpha, widthScale) {
-        const centerX = width * (.48 + Math.sin(time * .17 + offset) * .04);
-        const centerY = height * (.52 + Math.cos(time * .14 + offset) * .04);
-        const spread = Math.min(width, height) * widthScale;
-        const lift = Math.sin(time * .2 + offset) * spread * .08;
-
-        context.save();
-        context.translate(pointer.x * 12, pointer.y * 10);
-        context.beginPath();
-        context.moveTo(centerX - spread, centerY + spread * .26);
-        context.bezierCurveTo(
-          centerX - spread * .54,
-          centerY - spread * .72 + lift,
-          centerX + spread * .14,
-          centerY + spread * .76,
-          centerX + spread,
-          centerY - spread * .22
-        );
-        context.strokeStyle = color;
-        context.globalAlpha = alpha;
-        context.lineWidth = Math.max(1, width * .0012);
-        context.stroke();
-        context.restore();
-      }
-
-      function drawArcs(time) {
-        const x = width * .51 + pointer.x * 14;
-        const y = height * .5 + pointer.y * 12;
-        const radius = Math.min(width, height) * .28;
-
-        context.save();
-        context.translate(x, y);
-        context.rotate(time * .018);
-        context.globalAlpha = .34;
-        context.lineWidth = 1;
-        context.strokeStyle = "#005587";
-
-        [1, .78, .54].forEach((scale, index) => {
-          context.beginPath();
-          context.arc(0, 0, radius * scale, -.92 + index * .18, 1.68 + index * .14);
-          context.stroke();
-        });
-
-        context.globalAlpha = .2;
-        context.strokeStyle = "#A88C61";
-        context.beginPath();
-        context.arc(0, 0, radius * 1.12, 2.1, 5.15);
-        context.stroke();
-        context.restore();
-      }
-
-      function drawGrainDust(time) {
-        const count = Math.min(160, Math.floor(width * height / 11000));
-        context.save();
-        context.fillStyle = "#005587";
-        context.globalAlpha = .12;
-
-        for (let index = 0; index < count; index += 1) {
-          const x = (index * 97 + time * (index % 3 + 1) * .12) % width;
-          const y = (index * 53 + Math.sin(time * .1 + index) * 8) % height;
-          const size = index % 5 === 0 ? 1.5 : .7;
-          context.fillRect(x, y, size, size);
-        }
-
-        context.restore();
-      }
-
-      function drawAccent() {
-        context.save();
-        context.fillStyle = "#86BC25";
-        context.globalAlpha = .72;
-        context.beginPath();
-        context.arc(width * .84, height * .16, 2.5, 0, Math.PI * 2);
-        context.fill();
-        context.restore();
-      }
-
-      function render(milliseconds) {
-        const time = milliseconds * .001;
-        pointer.x += (target.x - pointer.x) * .025;
-        pointer.y += (target.y - pointer.y) * .025;
-
-        background();
-        fields.forEach(field => drawField(field, time));
-        drawMineralForms(time);
-        drawRibbon(time, 0, "#003B5C", .32, .37);
-        drawRibbon(time, 2.4, "#00A3E0", .24, .3);
-        drawRibbon(time, 4.8, "#603640", .16, .24);
-        drawArcs(time);
-        drawGrainDust(time);
-        drawAccent();
-
-        window.requestAnimationFrame(render);
-      }
-
-      window.addEventListener("resize", resize);
-
-      window.addEventListener("pointermove", event => {
-        target.x = (event.clientX / width - .5) * 2;
-        target.y = (event.clientY / height - .5) * 2;
-      }, { passive: true });
-
-      window.addEventListener("pointerleave", () => {
-        target.x = 0;
-        target.y = 0;
-      });
-
-      resize();
-      window.requestAnimationFrame(render);
-
-      // ================= Birthday FX layer (confetti, crackers, balloons) =================
-      const fx = document.getElementById("fx");
-      const fctx = fx.getContext("2d");
-      let fxWidth = 0, fxHeight = 0, fxDpr = 1;
-
-      function resizeFx() {
-        fxDpr = Math.min(window.devicePixelRatio || 1, 2);
-        fxWidth = window.innerWidth;
-        fxHeight = window.innerHeight;
-        fx.width = fxWidth * fxDpr;
-        fx.height = fxHeight * fxDpr;
-        fctx.setTransform(fxDpr, 0, 0, fxDpr, 0, 0);
-      }
-      resizeFx();
-
-      const PALETTE = ["#86BC25", "#00A3E0", "#005587", "#A88C61", "#E8C15C", "#E0567A", "#F3F7F8"];
-      const GRAVITY = 340; // px/s^2
-
-      // ---- Confetti particles ----
-      function spawnConfettiBurst(x, y, count) {
-        const particles = [];
-        for (let i = 0; i < count; i += 1) {
-          const angle = Math.random() * Math.PI * 2;
-          const speed = 120 + Math.random() * 260;
-          particles.push({
-            x, y,
-            vx: Math.cos(angle) * speed,
-            vy: Math.sin(angle) * speed - 60,
-            size: 4 + Math.random() * 5,
-            color: PALETTE[(Math.random() * PALETTE.length) | 0],
-            rot: Math.random() * Math.PI * 2,
-            vr: (Math.random() - .5) * 8,
-            shape: Math.random() < .5 ? "rect" : "circle",
-            life: 0,
-            maxLife: 2.4 + Math.random() * 1.4
-          });
-        }
-        confetti.push(...particles);
-      }
-
-      // ---- Cracker (firework) bursts ----
-      function spawnCracker(x, y) {
-        const count = 46 + Math.floor(Math.random() * 20);
-        const baseColor = PALETTE[(Math.random() * PALETTE.length) | 0];
-        for (let i = 0; i < count; i += 1) {
-          const angle = (Math.PI * 2 * i) / count + Math.random() * .18;
-          const speed = 90 + Math.random() * 210;
-          sparks.push({
-            x, y,
-            vx: Math.cos(angle) * speed,
-            vy: Math.sin(angle) * speed,
-            color: Math.random() < .3 ? "#FFFFFF" : baseColor,
-            life: 0,
-            maxLife: .9 + Math.random() * .6,
-            size: 1.4 + Math.random() * 1.8
-          });
-        }
-      }
-
-      const confetti = [];
-      const sparks = [];
-
-      // ---- Balloons ----
-      function makeBalloon() {
-        return {
-          x: Math.random() * fxWidth,
-          y: fxHeight + 80 + Math.random() * fxHeight,
-          w: 34 + Math.random() * 20,
-          color: PALETTE[(Math.random() * PALETTE.length) | 0],
-          speed: 26 + Math.random() * 30,
-          sway: Math.random() * Math.PI * 2,
-          swaySpeed: .6 + Math.random() * .6,
-          swayAmp: 18 + Math.random() * 16
-        };
-      }
-      const balloons = Array.from({ length: 9 }, makeBalloon);
-
-      function drawBalloon(b, time) {
-        const sx = b.x + Math.sin(time * b.swaySpeed + b.sway) * b.swayAmp;
-        const h = b.w * 1.25;
-        fctx.save();
-        fctx.translate(sx, b.y);
-
-        // string
-        fctx.strokeStyle = "rgba(18,55,70,.35)";
-        fctx.lineWidth = 1;
-        fctx.beginPath();
-        fctx.moveTo(0, h * .5);
-        fctx.quadraticCurveTo(6, h * .5 + 22, 0, h * .5 + 46);
-        fctx.stroke();
-
-        // balloon body
-        const grad = fctx.createRadialGradient(-b.w * .25, -h * .25, b.w * .12, 0, 0, b.w * .75);
-        grad.addColorStop(0, "rgba(255,255,255,.55)");
-        grad.addColorStop(.18, b.color);
-        grad.addColorStop(1, b.color);
-        fctx.fillStyle = grad;
-        fctx.globalAlpha = .88;
-        fctx.beginPath();
-        fctx.ellipse(0, 0, b.w * .5, h * .5, 0, 0, Math.PI * 2);
-        fctx.fill();
-
-        // knot
-        fctx.beginPath();
-        fctx.moveTo(-4, h * .48);
-        fctx.lineTo(4, h * .48);
-        fctx.lineTo(0, h * .5 + 6);
-        fctx.closePath();
-        fctx.fill();
-
-        fctx.restore();
-      }
-
-      let lastTime = performance.now();
-      let crackerTimer = 0;
-      let confettiTimer = 0;
-      const startTime = performance.now();
-
-      function fxLoop(now) {
-        const dt = Math.min(.05, (now - lastTime) / 1000);
-        lastTime = now;
-        const elapsed = (now - startTime) / 1000;
-        const t = now * .001;
-
-        fctx.clearRect(0, 0, fxWidth, fxHeight);
-
-        // Only run the celebratory burst-heavy phase for the first ~10s,
-        // then ease into gentle floating balloons + light confetti drizzle.
-        const activePhase = elapsed < 10;
-
-        if (activePhase) {
-          crackerTimer += dt;
-          if (crackerTimer > .85) {
-            crackerTimer = 0;
-            const cx = fxWidth * (.15 + Math.random() * .7);
-            const cy = fxHeight * (.12 + Math.random() * .38);
-            spawnCracker(cx, cy);
-          }
-          confettiTimer += dt;
-          if (confettiTimer > .5) {
-            confettiTimer = 0;
-            spawnConfettiBurst(fxWidth * Math.random(), -20, 14);
-          }
-        } else {
-          confettiTimer += dt;
-          if (confettiTimer > 1.6) {
-            confettiTimer = 0;
-            spawnConfettiBurst(fxWidth * Math.random(), -20, 6);
-          }
-        }
-
-        // update + draw confetti
-        for (let i = confetti.length - 1; i >= 0; i -= 1) {
-          const p = confetti[i];
-          p.life += dt;
-          p.vy += GRAVITY * dt * .35;
-          p.x += p.vx * dt;
-          p.y += p.vy * dt;
-          p.rot += p.vr * dt;
-          const fade = Math.max(0, 1 - p.life / p.maxLife);
-          if (fade <= 0 || p.y > fxHeight + 40) {
-            confetti.splice(i, 1);
-            continue;
-          }
-          fctx.save();
-          fctx.translate(p.x, p.y);
-          fctx.rotate(p.rot);
-          fctx.globalAlpha = fade;
-          fctx.fillStyle = p.color;
-          if (p.shape === "rect") {
-            fctx.fillRect(-p.size * .5, -p.size * .35, p.size, p.size * .7);
-          } else {
-            fctx.beginPath();
-            fctx.arc(0, 0, p.size * .5, 0, Math.PI * 2);
-            fctx.fill();
-          }
-          fctx.restore();
-        }
-
-        // update + draw sparks (cracker bursts)
-        fctx.save();
-        fctx.globalCompositeOperation = "lighter";
-        for (let i = sparks.length - 1; i >= 0; i -= 1) {
-          const s = sparks[i];
-          s.life += dt;
-          s.vy += GRAVITY * dt * .5;
-          s.vx *= 1 - dt * .6;
-          s.x += s.vx * dt;
-          s.y += s.vy * dt;
-          const fade = Math.max(0, 1 - s.life / s.maxLife);
-          if (fade <= 0) {
-            sparks.splice(i, 1);
-            continue;
-          }
-          fctx.globalAlpha = fade;
-          fctx.fillStyle = s.color;
-          fctx.beginPath();
-          fctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
-          fctx.fill();
-        }
-        fctx.restore();
-
-        // balloons drifting upward, endlessly
-        balloons.forEach(b => {
-          b.y -= b.speed * dt;
-          if (b.y < -80) {
-            b.y = fxHeight + 80;
-            b.x = Math.random() * fxWidth;
-            b.color = PALETTE[(Math.random() * PALETTE.length) | 0];
-          }
-          drawBalloon(b, t);
-        });
-
-        window.requestAnimationFrame(fxLoop);
-      }
-      window.requestAnimationFrame(fxLoop);
-
-      // initial celebratory pop on load
-      spawnCracker(fxWidth * .3, fxHeight * .28);
-      spawnCracker(fxWidth * .7, fxHeight * .22);
-      spawnConfettiBurst(fxWidth * .5, fxHeight * .1, 40);
+      // Scroll-reveal for each section as it enters the viewport.
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add("in"); });
+      }, { threshold: .15 });
+      document.querySelectorAll(".reveal").forEach(el => io.observe(el));
     })();
   </script>
 </body>
