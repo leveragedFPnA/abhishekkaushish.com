@@ -1,79 +1,351 @@
-<!-- filename: abhishek-kaushish-portfolio.html -->
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Abhishek Kaushish — FP&amp;A</title>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+
   <style>
     :root{
-      --bg:#0A0A0C; --panel:#111114; --line:rgba(255,255,255,.09);
-      --white:#F7F7F9; --muted:#9A9AA3; --orange:255,138,58; --blue:150,196,255;
+      --bg:#0A0A0C;
+      --panel:#111114;
+      --line:rgba(255,255,255,.09);
+      --white:#F7F7F9;
+      --muted:#9A9AA3;
+      --orange:255,138,58;
+      --blue:150,196,255;
     }
+
     *{box-sizing:border-box;margin:0;padding:0}
-    html{scroll-behavior:smooth}                       /* anchor jumps now glide */
-    body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--white);overflow-x:hidden}
-    .blob{position:fixed;border-radius:50%;filter:blur(90px);pointer-events:none;z-index:0;
-      will-change:transform;transition:transform .6s ease-out}
-    .blob-orange{width:60vw;height:60vw;left:-18vw;top:4vh;opacity:.18;
-      background:radial-gradient(circle,rgba(var(--orange),1) 0%,rgba(var(--orange),0) 70%)}
-    .blob-blue{width:52vw;height:52vw;right:-14vw;top:-6vh;opacity:.26;
-      background:radial-gradient(circle,rgba(var(--blue),1) 0%,rgba(var(--blue),0) 70%)}
-    .grain{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.04;
-      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
-    .wrap{position:relative;z-index:2;max-width:960px;margin:0 auto;padding:0 24px}
-    .accent{background:linear-gradient(100deg,rgba(var(--orange),1),rgba(var(--blue),1));
-      -webkit-background-clip:text;background-clip:text;color:transparent}
-    /* hero */
-    header{min-height:100vh;display:flex;flex-direction:column;align-items:center;
-      justify-content:center;text-align:center}
-    .tag{display:inline-block;font-size:12px;font-weight:500;letter-spacing:.28em;text-transform:uppercase;
-      color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:8px 18px;
-      margin-bottom:32px;background:rgba(255,255,255,.03)}
-    h1{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(40px,7.5vw,86px);
-      line-height:1.04;letter-spacing:-.03em;max-width:14ch}
-    .sub{font-size:clamp(15px,2vw,19px);color:var(--muted);max-width:560px;margin:28px auto 0;line-height:1.6}
-    .meta{font-size:13px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:22px}
-    .cta{margin-top:40px;display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
-    .btn{font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:15px;padding:14px 30px;
-      border-radius:999px;text-decoration:none;transition:all .18s ease}
-    .btn-primary{background:var(--white);color:var(--bg)}
-    .btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(255,255,255,.15)}
-    .btn-ghost{border:1px solid rgba(255,255,255,.22);color:var(--white)}
-    .btn-ghost:hover{border-color:var(--white);background:rgba(255,255,255,.05)}
-    /* sections */
-    section{padding:80px 0;scroll-margin-top:24px}       /* clean anchor landing */
-    footer{scroll-margin-top:24px}
-    .eyebrow{font-size:12px;font-weight:500;letter-spacing:.24em;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
-    h2{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(28px,4.4vw,46px);
-      letter-spacing:-.02em;margin-bottom:40px}
-    .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:16px}
-    .stat{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:28px}
-    .stat b{font-family:'Space Grotesk',sans-serif;display:block;font-size:44px;font-weight:700;letter-spacing:-.02em}
-    .stat small{color:var(--muted);font-size:14px}
-    .job{border-left:1px solid var(--line);padding:0 0 40px 28px;position:relative}
-    .job::before{content:"";position:absolute;left:-5px;top:6px;width:10px;height:10px;border-radius:50%;
-      background:linear-gradient(rgba(var(--orange),1),rgba(var(--blue),1))}
-    .job h3{font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:500}
-    .job .role{color:var(--muted);font-size:14px;font-weight:500;letter-spacing:.06em;margin:4px 0 16px;text-transform:uppercase}
-    .job ul{list-style:none;display:grid;gap:10px}
-    .job li{padding-left:22px;position:relative;color:var(--muted);font-size:15px;line-height:1.55}
-    .job li::before{content:"";position:absolute;left:0;top:9px;width:6px;height:6px;border-radius:50%;background:rgba(var(--orange),.8)}
-    .chips{display:flex;flex-wrap:wrap;gap:10px}
-    .chip{background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:10px 18px;
-      font-size:14px;font-weight:500;transition:all .18s ease}
-    .chip:hover{border-color:rgba(var(--blue),.6);color:#fff}
-    footer{padding:90px 0;text-align:center;border-top:1px solid var(--line)}
-    footer a{color:var(--white);text-decoration:none;font-weight:500;border-bottom:1px solid transparent;transition:border .18s ease}
-    footer a:hover{border-color:rgba(var(--blue),.8)}
-    .links{margin-top:24px;display:flex;gap:24px;justify-content:center;flex-wrap:wrap;color:var(--muted)}
-    .reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
-    .reveal.in{opacity:1;transform:none}
-    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.blob{transition:none}.reveal{opacity:1;transform:none;transition:none}}
+
+    html{scroll-behavior:smooth}
+
+    body{
+      font-family:'Inter',sans-serif;
+      background:var(--bg);
+      color:var(--white);
+      overflow-x:hidden;
+    }
+
+    .blob{
+      position:fixed;
+      border-radius:50%;
+      filter:blur(90px);
+      pointer-events:none;
+      z-index:0;
+      will-change:transform;
+      transition:transform .6s ease-out;
+    }
+
+    .blob-orange{
+      width:60vw;
+      height:60vw;
+      left:-18vw;
+      top:4vh;
+      opacity:.18;
+      background:radial-gradient(circle,rgba(var(--orange),1) 0%,rgba(var(--orange),0) 70%);
+    }
+
+    .blob-blue{
+      width:52vw;
+      height:52vw;
+      right:-14vw;
+      top:-6vh;
+      opacity:.26;
+      background:radial-gradient(circle,rgba(var(--blue),1) 0%,rgba(var(--blue),0) 70%);
+    }
+
+    .grain{
+      position:fixed;
+      inset:0;
+      z-index:1;
+      pointer-events:none;
+      opacity:.04;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    .wrap{
+      position:relative;
+      z-index:2;
+      max-width:960px;
+      margin:0 auto;
+      padding:0 24px;
+    }
+
+    .accent{
+      background:linear-gradient(100deg,rgba(var(--orange),1),rgba(var(--blue),1));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+    }
+
+    header{
+      min-height:100vh;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+    }
+
+    .tag{
+      display:inline-block;
+      font-size:12px;
+      font-weight:500;
+      letter-spacing:.28em;
+      text-transform:uppercase;
+      color:var(--muted);
+      border:1px solid var(--line);
+      border-radius:999px;
+      padding:8px 18px;
+      margin-bottom:32px;
+      background:rgba(255,255,255,.03);
+    }
+
+    h1{
+      font-family:'Space Grotesk',sans-serif;
+      font-weight:700;
+      font-size:clamp(40px,7.5vw,86px);
+      line-height:1.04;
+      letter-spacing:-.03em;
+      max-width:14ch;
+    }
+
+    .sub{
+      font-size:clamp(15px,2vw,19px);
+      color:var(--muted);
+      max-width:560px;
+      margin:28px auto 0;
+      line-height:1.6;
+    }
+
+    .meta{
+      font-size:13px;
+      font-weight:500;
+      letter-spacing:.1em;
+      text-transform:uppercase;
+      color:var(--muted);
+      margin-top:22px;
+    }
+
+    .cta{
+      margin-top:40px;
+      display:flex;
+      gap:14px;
+      flex-wrap:wrap;
+      justify-content:center;
+    }
+
+    .btn{
+      font-family:'Space Grotesk',sans-serif;
+      font-weight:500;
+      font-size:15px;
+      padding:14px 30px;
+      border-radius:999px;
+      text-decoration:none;
+      transition:all .18s ease;
+    }
+
+    .btn-primary{
+      background:var(--white);
+      color:var(--bg);
+    }
+
+    .btn-primary:hover{
+      transform:translateY(-2px);
+      box-shadow:0 8px 30px rgba(255,255,255,.15);
+    }
+
+    .btn-ghost{
+      border:1px solid rgba(255,255,255,.22);
+      color:var(--white);
+    }
+
+    .btn-ghost:hover{
+      border-color:var(--white);
+      background:rgba(255,255,255,.05);
+    }
+
+    section{
+      padding:80px 0;
+      scroll-margin-top:24px;
+    }
+
+    footer{
+      scroll-margin-top:24px;
+      padding:90px 0;
+      text-align:center;
+      border-top:1px solid var(--line);
+    }
+
+    .eyebrow{
+      font-size:12px;
+      font-weight:500;
+      letter-spacing:.24em;
+      text-transform:uppercase;
+      color:var(--muted);
+      margin-bottom:12px;
+    }
+
+    h2{
+      font-family:'Space Grotesk',sans-serif;
+      font-weight:700;
+      font-size:clamp(28px,4.4vw,46px);
+      letter-spacing:-.02em;
+      margin-bottom:40px;
+    }
+
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+      gap:16px;
+    }
+
+    .stat{
+      background:var(--panel);
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:28px;
+    }
+
+    .stat b{
+      font-family:'Space Grotesk',sans-serif;
+      display:block;
+      font-size:44px;
+      font-weight:700;
+      letter-spacing:-.02em;
+    }
+
+    .stat small{
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    .job{
+      border-left:1px solid var(--line);
+      padding:0 0 40px 28px;
+      position:relative;
+    }
+
+    .job::before{
+      content:"";
+      position:absolute;
+      left:-5px;
+      top:6px;
+      width:10px;
+      height:10px;
+      border-radius:50%;
+      background:linear-gradient(rgba(var(--orange),1),rgba(var(--blue),1));
+    }
+
+    .job h3{
+      font-family:'Space Grotesk',sans-serif;
+      font-size:22px;
+      font-weight:500;
+    }
+
+    .job .role{
+      color:var(--muted);
+      font-size:14px;
+      font-weight:500;
+      letter-spacing:.06em;
+      margin:4px 0 16px;
+      text-transform:uppercase;
+    }
+
+    .job ul{
+      list-style:none;
+      display:grid;
+      gap:10px;
+    }
+
+    .job li{
+      padding-left:22px;
+      position:relative;
+      color:var(--muted);
+      font-size:15px;
+      line-height:1.55;
+    }
+
+    .job li::before{
+      content:"";
+      position:absolute;
+      left:0;
+      top:9px;
+      width:6px;
+      height:6px;
+      border-radius:50%;
+      background:rgba(var(--orange),.8);
+    }
+
+    .chips{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+
+    .chip{
+      background:var(--panel);
+      border:1px solid var(--line);
+      border-radius:999px;
+      padding:10px 18px;
+      font-size:14px;
+      font-weight:500;
+      transition:all .18s ease;
+    }
+
+    .chip:hover{
+      border-color:rgba(var(--blue),.6);
+      color:#fff;
+    }
+
+    footer a{
+      color:var(--white);
+      text-decoration:none;
+      font-weight:500;
+      border-bottom:1px solid transparent;
+      transition:border .18s ease;
+    }
+
+    footer a:hover{
+      border-color:rgba(var(--blue),.8);
+    }
+
+    .links{
+      margin-top:24px;
+      display:flex;
+      gap:24px;
+      justify-content:center;
+      flex-wrap:wrap;
+      color:var(--muted);
+    }
+
+    .reveal{
+      opacity:0;
+      transform:translateY(24px);
+      transition:opacity .6s ease,transform .6s ease;
+    }
+
+    .reveal.in{
+      opacity:1;
+      transform:none;
+    }
+
+    @media(prefers-reduced-motion:reduce){
+      html{scroll-behavior:auto}
+      .blob{transition:none}
+      .reveal{
+        opacity:1;
+        transform:none;
+        transition:none;
+      }
+    }
   </style>
 </head>
+
 <body>
   <div class="blob blob-orange" id="blobA" aria-hidden="true"></div>
   <div class="blob blob-blue" id="blobB" aria-hidden="true"></div>
@@ -81,12 +353,21 @@
 
   <header class="wrap">
     <span class="tag">Abhishek Kaushish</span>
-    <h1>I turn month-end chaos into <span class="accent">same-day decisions.</span></h1>
-    <p class="sub">FP&amp;A built for speed — forecasting, planning and finance automation that gets leaders the numbers before the meeting, not after.</p>
+
+    <h1>
+      I turn month-end chaos into
+      <span class="accent">same-day decisions.</span>
+    </h1>
+
+    <p class="sub">
+      FP&amp;A built for speed — forecasting, planning and finance automation
+      that gets leaders the numbers before the meeting, not after.
+    </p>
+
     <p class="meta">FP&amp;A · ~4 yrs · Deloitte USI</p>
+
     <div class="cta">
       <a class="btn btn-primary" href="#work">See my work</a>
-      <!-- direct mailto: opens the email client in one click -->
       <a class="btn btn-ghost" href="mailto:abhishek@abhishekkaushish.com">Get in touch</a>
     </div>
   </header>
@@ -94,20 +375,38 @@
   <section class="wrap reveal">
     <p class="eyebrow">By the numbers</p>
     <h2>Impact I've shipped</h2>
+
     <div class="stats">
-      <div class="stat"><b class="accent">$100M+</b><small>Compensation planned across 500+ employees</small></div>
-      <div class="stat"><b class="accent">65%</b><small>Faster close-cycle reporting via automation</small></div>
-      <div class="stat"><b class="accent">30%</b><small>Less rework using standardized templates</small></div>
-      <div class="stat"><b class="accent">13</b><small>Cost centers owned end-to-end</small></div>
+      <div class="stat">
+        <b class="accent">$100M+</b>
+        <small>Compensation planned across 500+ employees</small>
+      </div>
+
+      <div class="stat">
+        <b class="accent">65%</b>
+        <small>Faster close-cycle reporting via automation</small>
+      </div>
+
+      <div class="stat">
+        <b class="accent">30%</b>
+        <small>Less rework using standardized templates</small>
+      </div>
+
+      <div class="stat">
+        <b class="accent">13</b>
+        <small>Cost centers owned end-to-end</small>
+      </div>
     </div>
   </section>
 
   <section class="wrap reveal" id="work">
     <p class="eyebrow">Experience</p>
     <h2>Where I've built things</h2>
+
     <div class="job">
       <h3>Deloitte USI</h3>
       <p class="role">FP&amp;A Analyst · May 2025 – Present · Hyderabad</p>
+
       <ul>
         <li>Own budgeting &amp; forecasting for $100M+ compensation across 500+ employees and 13 cost centers, partnering with 15+ business leaders.</li>
         <li>Lead monthly OpEx analysis across 3 verticals ($25M spend), turning variances into risks, opportunities and spend actions.</li>
@@ -115,9 +414,11 @@
         <li>Redesigned &amp; automated close reporting in Excel — 65% faster turnaround, ~8 hrs saved monthly.</li>
       </ul>
     </div>
+
     <div class="job">
       <h3>EXL Service</h3>
       <p class="role">Assistant Manager → Senior Associate, FP&amp;A · Sep 2022 – May 2025 · Noida</p>
+
       <ul>
         <li>Owned reporting, forecasting &amp; trend analysis for Liberty Mutual's Distribution vertical across monthly/quarterly cycles.</li>
         <li>Prepared quarterly earnings decks for Investor Relations — premium growth, policy sales and loss-ratio trends.</li>
@@ -127,22 +428,55 @@
     </div>
   </section>
 
+  <!-- This is the new research section. -->
+  <section class="wrap reveal" id="research">
+    <p class="eyebrow">Research &amp; opinions</p>
+
+    <h2>
+      My promise: you'll never have to ask
+      <span class="accent">“what's the trade?”</span>
+    </h2>
+
+    <p class="sub">
+      Short, practical perspectives on companies, markets, and the finance
+      questions behind the headline.
+    </p>
+
+    <div class="cta">
+      <a class="btn btn-primary" href="nvidia.html">
+        See my research
+      </a>
+    </div>
+  </section>
+
   <section class="wrap reveal">
     <p class="eyebrow">Toolkit</p>
     <h2>What I work with</h2>
+
     <div class="chips">
-      <span class="chip">Advanced Excel &amp; VBA</span><span class="chip">Power BI (DAX)</span>
-      <span class="chip">Anaplan</span><span class="chip">SAP</span><span class="chip">Essbase</span>
-      <span class="chip">S&amp;P Global</span><span class="chip">Budgeting &amp; Forecasting</span>
-      <span class="chip">Variance Analysis</span><span class="chip">Headcount Planning</span>
-      <span class="chip">Financial Modelling</span><span class="chip">Month-End Close</span>
+      <span class="chip">Advanced Excel &amp; VBA</span>
+      <span class="chip">Power BI (DAX)</span>
+      <span class="chip">Anaplan</span>
+      <span class="chip">SAP</span>
+      <span class="chip">Essbase</span>
+      <span class="chip">S&amp;P Global</span>
+      <span class="chip">Budgeting &amp; Forecasting</span>
+      <span class="chip">Variance Analysis</span>
+      <span class="chip">Headcount Planning</span>
+      <span class="chip">Financial Modelling</span>
+      <span class="chip">Month-End Close</span>
       <span class="chip">Management Reporting</span>
     </div>
   </section>
 
   <footer class="wrap reveal" id="contact">
     <p class="eyebrow">Let's talk</p>
-    <h2>Building the finance function's <span class="accent">future.</span></h2>
+
+    <h2>
+      Building the finance function's
+      <span class="accent">future.</span>
+    </h2>
+
     <div class="links">
       <a href="mailto:abhishek@abhishekkaushish.com">abhishek@abhishekkaushish.com</a>
       <a href="tel:+918708786419">+91 8708786419</a>
@@ -151,27 +485,29 @@
   </footer>
 
   <script>
-    // filename: abhishek-kaushish-portfolio.html
     (() => {
       const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-      // Parallax drift on the ambient blobs (decorative; skipped for reduced-motion).
       if (!reduce) {
         const a = document.getElementById("blobA");
         const b = document.getElementById("blobB");
+
         addEventListener("pointermove", (e) => {
-          const nx = e.clientX / innerWidth - .5;   // -0.5..0.5, centered
+          const nx = e.clientX / innerWidth - .5;
           const ny = e.clientY / innerHeight - .5;
+
           a.style.transform = `translate(${nx * 40}px, ${ny * 40}px)`;
-          b.style.transform = `translate(${nx * -30}px, ${ny * -30}px)`; // opposite = depth
-        }, { passive: true });
+          b.style.transform = `translate(${nx * -30}px, ${ny * -30}px)`;
+        }, {passive:true});
       }
 
-      // Scroll-reveal for each section as it enters the viewport.
       const io = new IntersectionObserver((entries) => {
-        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add("in"); });
-      }, { threshold: .15 });
-      document.querySelectorAll(".reveal").forEach(el => io.observe(el));
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) entry.target.classList.add("in");
+        });
+      }, {threshold:.15});
+
+      document.querySelectorAll(".reveal").forEach((element) => io.observe(element));
     })();
   </script>
 </body>
